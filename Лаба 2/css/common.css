@@ -1,0 +1,48 @@
+body {
+	background-image: url(../images/background.jpg);
+	background-size: cover;
+}
+
+p {
+	/* background-color: rgba(255, 255, 255, 0.85); */
+	font-size: 18pt;
+}
+
+img {
+	opacity: 0.9;
+	max-width: 600px;
+}
+
+img:hover {
+	opacity: 1;
+}
+
+a {
+	font-size: 14pt;
+	font-style: italic;
+	color: rgb(94, 63, 16);
+	font-weight: bold;
+	/* background-color: rgba(255, 255, 255, 0.85); */
+}
+
+li {
+	font-size: 16pt;
+}
+
+h2, h3 {
+	color: wheat;
+	font-family: Georgia;
+	/* background-color: rgba(255, 255, 255, 0.85); */
+}
+
+table {
+	font-size: 14pt;
+	border-style: dashed;
+	border-width: 10px;
+}
+
+label {
+	font-size: medium;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	color: gold;
+}

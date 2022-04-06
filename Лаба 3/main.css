@@ -1,0 +1,12 @@
+td:first-child {
+    padding-right: 20px;
+}
+
+div table {
+    border: thin;
+    border-style: solid;
+}
+
+div table td {
+    padding-right: 20px;
+}
