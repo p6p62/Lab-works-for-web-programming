@@ -1,0 +1,20 @@
+#lab3_function_picture {
+    max-width: 650px;
+    margin-top: 10px;
+    margin-left: 10px;
+    border: thin;
+    border-style: solid;
+}
+
+#tabResult table {
+    border: thick;
+    border-style: solid;
+}
+
+#tabResult table td {
+    padding-right: 20px;
+}
+
+#tabResult table td:last-child {
+    padding-right: 0;
+}

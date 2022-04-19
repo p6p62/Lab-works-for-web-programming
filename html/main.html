@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>WEB-программирование</title>
+    <link rel="stylesheet" type="text/css" href="..\css\common.css">
+    <link rel="stylesheet" type="text/css" href="../css/lab3.css">
+    <script src="../js/labwork_choose.js"></script>
+</head>
+
+<body>
+    <header>
+        Лабораторные работы по WEB-программированию, 943, Гладышев Борис, вариант 6
+    </header>
+    <aside id="lab-work-menu">
+        <h3>Все работы</h3>
+        <ul class="menu-list">
+            <li>
+                <button onclick="changeLabWorkOnPage('content_lab_1')">
+                    <span class="lab-number">1</span>Сайт на 4 страницы
+                </button>
+            </li>
+            <li>
+                <button onclick="changeLabWorkOnPage('content_lab_2')">
+                    <span class="lab-number">2</span>JS в 3 способах
+                </button>
+            </li>
+            <li>
+                <button onclick="changeLabWorkOnPage('content_lab_3')">
+                    <span class="lab-number">3</span>Табулирование функции
+                </button>
+            </li>
+        </ul>
+    </aside>
+    <main>
+        <div class="lab-work-content" id="content_lab_1" hidden>
+            <h2>Привет, ты на сайте для 1 лабораторки</h2>
+            <h2>Тема - Наука и технологии</h2>
+            <h3>Отсюда можно перейти на 3 страницы второго уровня:</h3>
+            <li>
+                <a href="for_lab_1/page_1.html">Тут страница №1</a>
+            </li>
+            <li>
+                <a href="for_lab_1/page_2.html">Тут страница №2</a>
+            </li>
+            <li>
+                <a href="for_lab_1/page_3.html">Тут страница №3</a>
+            </li>
+            <h3>А здесь табличка:</h3>
+            <table>
+                <caption>Табличка с пояснением</caption>
+                <tr>
+                    <th>Номер страницы</th>
+                    <th>Содержимое</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="for_lab_1/page_1.html">"Кольцо Эйнштейна"</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><a href="for_lab_1/page_2.html">Галактика NGC 1277</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><a href="for_lab_1/page_3.html">Самые старые солнечные очки</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="lab-work-content" id="content_lab_2" hidden>
+            <div class="js-actions-blocks">
+                <h3>Использование вызова JS-кода по схеме URL:</h3>
+
+                <label>Способ 1:</label>
+                <a href="JavaScript:window.open('main.html')">Открыть эту же страницу</a>
+                <br>
+
+                <label>Способ 2:</label>
+                <a href="JavaScript:document.getElementById('hidden_text').hidden = false;">Показать скрытый текст</a>
+                <p id="hidden_text" hidden="true">*скрытый текст*</p>
+
+                <h3>Подключение JS-кода через события:</h3>
+
+                <label>Способ 1:</label>
+                <input type="text" placeholder="начните печатать" oninput="alert('Вы нажали ещё одну клавишу');">
+                <br>
+
+                <label>Способ 2:</label>
+                <button onclick="document.getElementById('hidden_text').hidden = true;">
+                    Скрыть скрытый текст из второго способа в URL
+                </button>
+
+                <h3>Использование кода, вставленного через контейнер &lt;script&gt;:</h3>
+                <label>Способ 1:</label>
+                <button onclick="startTimer();">Старт</button>
+                <button onclick="stopTimer();">Стоп</button>
+                <span id="time_counter">0</span> (секундомер. Тут есть вызов через контейнер script, просто он отключен)<br>
+                <script src="../js/for_lab_2/seconds_counter.js"></script>
+                <!-- закомментировал, чтобы не выполнялось всегда при старте страницы -->
+                <!-- <script>
+                    startTimer();
+                </script> -->
+
+                <label>Способ 2:</label> Число элементов-потомков корневого элемента DOM:
+                <script>
+                    document.write(document.getElementsByTagName("*").length);
+                </script>
+            </div>
+        </div>
+        <div class="lab-work-content" id="content_lab_3" hidden>
+            <img src="../other_files/images/lab3_Функция.png" id="lab3_function_picture">
+            <p>
+                Запись в верхнем блоке функции ошибочна: в выражении под знаком суммы есть деление на n,
+                а она равна 0 при первом расчёте. При вычислении функции считаю параметр n идущим от 1
+            </p>
+
+            <table id="table_for_lab3_tab_parameters">
+                <caption style="font-style: italic;">Параметры табуляции</caption>
+                <tbody>
+                    <tr>
+                        <td>X</td>
+                        <td>
+                            <label> от </label><input type="number" value="1.3" id="xStart">
+                            <label> до </label><input type="number" value="3" id="xEnd">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Y</td>
+                        <td>
+                            <label> от </label><input type="number" value="-1" id="yStart">
+                            <label> до </label><input type="number" value="4" id="yEnd">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Шаг</td>
+                        <td>
+                            <input type="number" value="0.5" id="tabStep">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>a</td>
+                        <td>
+                            <input type="number" value="1.9" id="aValue">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>nm1</td>
+                        <td>
+                            <input type="number" value="3" id="nm1Value">
+                            (целое число в отрезке [2, 6])
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>nm2</td>
+                        <td>
+                            <input type="number" value="5" id="nm2Value">
+                            (целое число в отрезке [2, 6])
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <script src="../js/lab3.js"></script>
+            <button
+                onclick="tabulate([xStart.value, xEnd.value, yStart.value, yEnd.value, tabStep.value, aValue.value, nm1Value.value, nm2Value.value])">
+                Табулировать
+            </button>
+            <div id="tabResult"></div>
+        </div>
+    </main>
+    <script src="../js/on_page_loaded.js"></script>
+</body>
+
+</html>

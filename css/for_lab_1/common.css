@@ -1,0 +1,39 @@
+body {
+	background-image: url(../../other_files/images/for_lab_1/background.jpg);
+	background-size: cover;
+}
+
+p {
+	font-size: 18pt;
+}
+
+img {
+	opacity: 0.9;
+	max-width: 600px;
+}
+
+img:hover {
+	opacity: 1;
+}
+
+a {
+	font-size: 14pt;
+	font-style: italic;
+	color: rgb(94, 63, 16);
+	font-weight: bold;
+}
+
+li {
+	font-size: 16pt;
+}
+
+h2, h3 {
+	color: wheat;
+	font-family: Georgia;
+}
+
+table {
+	font-size: 14pt;
+	border-style: dashed;
+	border-width: 10px;
+}

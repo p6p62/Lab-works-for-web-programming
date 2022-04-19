@@ -1,0 +1,62 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main h1:first-child, h2:first-child, h3:first-child {
+    margin-top: 0;
+}
+
+body {
+    background-color: mistyrose;
+}
+
+header {
+    text-align: center;
+    font-size: large;
+    font-style: italic;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+main {
+    background-color: burlywood;
+}
+
+#content_lab_1 {
+    background-image: url("../other_files/images/background.jpg");
+    background-size: cover;
+}
+
+#lab-work-menu {
+    float: left;
+    background-color: darkkhaki;
+}
+
+#lab-work-menu h3,button {
+    margin-top: 0;
+    margin-bottom: 3px;
+}
+
+#lab-work-menu button {
+    font-size: medium;
+    color: white;
+    font-weight: 600;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+ul.menu-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.menu-list button {
+    min-width: 200px;
+    text-align: left;
+}
+
+.lab-number {
+    font-weight: bold;
+    margin-right: 4pt;
+}
