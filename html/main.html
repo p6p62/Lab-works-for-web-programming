@@ -178,13 +178,36 @@
             <script src="../js/lab4.js"></script>
             <img src="../other_files/images/lab4_Задание.png" id="lab4_task_image"><br>
 
-            <fieldset>
+            <fieldset id="lab4_setting_fieldset">
                 <legend>Работа с табличкой</legend>
                 <label>Размер таблицы (от 1 до 50)
                     <input type="number" min="1" max="50" maxlength="2" id="lab4_table_size">
                 </label>
                 <br>
                 <button onclick="createDynamicTable(lab4_table_size.value, lab4_result_dynamic_table);">Создать</button>
+                <div class="lab4_action_configure" id="lab4_action1">
+                    <h4>Действие 1</h4>
+                    <button onclick="action1CollumnsDelete(lab4_lessborder_number.value);">
+                        Удалить столбцы, где произведение всех чисел меньше, чем
+                        <input type="number" id="lab4_lessborder_number" value="15">
+                    </button>
+                </div>
+
+                <div id="lab4_action2">
+                    <h4>Действие 2</h4>
+                    <input type="radio" name="calc_type_for_action2" id="button_all_count" checked>
+                    <label for="button_all_count">Общее количество</label>
+                    <br>
+                    <input type="radio" name="calc_type_for_action2" id="button_average">
+                    <label for="button_average">Среднее арифметическое</label>
+                    <br>
+                    <button>Посчитать и заполнить</button>
+                </div>
+
+                <div id="lab4_action3">
+                    <h4>Действие 3</h4>
+                    <button>Поворот на 90° влево (против часовой)</button>
+                </div>
             </fieldset>
 
             <h3>Табличка</h3>

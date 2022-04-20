@@ -1,7 +1,32 @@
+var tableArrayOnPage = null;
+
 function createDynamicTable(tableSize, divForResult) {
     var tableSizeNum = getRightSize(tableSize);
     var dynamicTableArray = getDynamicTableArray(tableSizeNum);
+    tableArrayOnPage = dynamicTableArray;
     addDynamicTableToSite(dynamicTableArray, divForResult);
+}
+
+function action1CollumnsDelete(cutoffByNumbersProduct) {
+    let cutoffNum = parseFloat(cutoffByNumbersProduct);
+    if (isNaN(cutoffNum))
+        return;
+    console.log('yesssss');
+    if (tableArrayOnPage === null || tableArrayOnPage === undefined)
+        return;
+    console.log('yesssss22222');
+
+    // поиск произведений столбцов
+    let colProducts = Array(tableArrayOnPage.length);
+    for (let col = 0; col < tableArrayOnPage.length; col++) {
+        colProducts[col] = 1;
+        for (let row = 0; row < tableArrayOnPage.length; row++) {
+            let tableCellObj = tableArrayOnPage[row][col];
+            if (tableCellObj !== undefined) {
+                colProducts[col] *= tableCellObj.cellNumber;
+            }
+        }
+    }
 }
 
 function addDynamicTableToSite(dynamicTableArray, divForResult) {

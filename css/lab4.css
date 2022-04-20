@@ -3,3 +3,11 @@ img#lab4_task_image {
     margin-top: 10px;
     margin-left: 10px;
 }
+
+#lab4_setting_fieldset {
+    display: inline-block;
+}
+
+#lab4_setting_fieldset h4 {
+    margin: 0;
+}
