@@ -6,3 +6,18 @@ mainElem.style.marginLeft = newMargin + "px";
 
 // активация отображения четвертой лабораторки
 changeLabWorkOnPage("content_lab_4");
+
+// установка одинаковой ширины кнопкам меню
+let allButtons = document.getElementById('lab-work-menu').getElementsByTagName('button');
+if (allButtons.length > 1) {
+    let maxWidth = allButtons[0].offsetWidth;
+    //console.log(maxWidth);
+    for (let i = 1; i < allButtons.length; i++) {
+        if (allButtons[i].offsetWidth > maxWidth)
+            maxWidth = allButtons[i].offsetWidth;
+    }
+    console.log(maxWidth);
+    for (let i = 0; i < allButtons.length; i++) {
+        allButtons[i].style.width = maxWidth + 1 + 'px';
+    }
+}
