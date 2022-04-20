@@ -4,5 +4,5 @@ var mainElem = document.getElementsByTagName("main")[0];
 var newMargin = document.getElementById("lab-work-menu").clientWidth + INTERVAL_PX;
 mainElem.style.marginLeft = newMargin + "px";
 
-// активация отображения первой лабораторки
-changeLabWorkOnPage("content_lab_1");
+// активация отображения четвертой лабораторки
+changeLabWorkOnPage("content_lab_4");

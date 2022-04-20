@@ -6,6 +6,7 @@
     <title>WEB-программирование</title>
     <link rel="stylesheet" type="text/css" href="..\css\common.css">
     <link rel="stylesheet" type="text/css" href="../css/lab3.css">
+    <link rel="stylesheet" type="text/css" href="../css/lab4.css">
     <script src="../js/labwork_choose.js"></script>
 </head>
 
@@ -29,6 +30,11 @@
             <li>
                 <button onclick="changeLabWorkOnPage('content_lab_3')">
                     <span class="lab-number">3</span>Табулирование функции
+                </button>
+            </li>
+            <li>
+                <button onclick="changeLabWorkOnPage('content_lab_4')">
+                    <span class="lab-number">4</span>Динамическая таблица
                 </button>
             </li>
         </ul>
@@ -95,7 +101,8 @@
                 <label>Способ 1:</label>
                 <button onclick="startTimer();">Старт</button>
                 <button onclick="stopTimer();">Стоп</button>
-                <span id="time_counter">0</span> (секундомер. Тут есть вызов через контейнер script, просто он отключен)<br>
+                <span id="time_counter">0</span> (секундомер. Тут есть вызов через контейнер script, просто он
+                отключен)<br>
                 <script src="../js/for_lab_2/seconds_counter.js"></script>
                 <!-- закомментировал, чтобы не выполнялось всегда при старте страницы -->
                 <!-- <script>
@@ -166,6 +173,22 @@
                 Табулировать
             </button>
             <div id="tabResult"></div>
+        </div>
+        <div class="lab-work-content" id="content_lab_4" hidden>
+            <script src="../js/lab4.js"></script>
+            <img src="../other_files/images/lab4_Задание.png" id="lab4_task_image"><br>
+
+            <fieldset>
+                <legend>Работа с табличкой</legend>
+                <label>Размер таблицы (от 1 до 50)
+                    <input type="number" min="1" max="50" maxlength="2" id="lab4_table_size">
+                </label>
+                <br>
+                <button onclick="createDynamicTable(lab4_table_size.value, lab4_result_dynamic_table);">Создать</button>
+            </fieldset>
+
+            <h3>Табличка</h3>
+            <div id="lab4_result_dynamic_table"></div>
         </div>
     </main>
     <script src="../js/on_page_loaded.js"></script>
