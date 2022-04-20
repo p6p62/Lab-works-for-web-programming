@@ -37,6 +37,39 @@ function action1CollumnsDelete(cutoffByNumbersProduct, divForResult) {
     addDynamicTableToSite(tableArrayOnPage, divForResult);
 }
 
+function action2CalcAverageOrAllCount(divForResult) {
+    if (tableArrayOnPage === null || tableArrayOnPage === undefined)
+        return;
+    // определение типа расчёта
+    let isAllCount = document.getElementById('button_all_count').checked;
+
+    // расчет чисел для заполнения
+    let averageValue = 0;
+    let allCount = 0;
+    for (let i = 0; i < tableArrayOnPage.length; i++)
+        for (let j = 0; j < tableArrayOnPage[i].length; j++) {
+            let tableCellObj = tableArrayOnPage[i][j];
+            if (tableCellObj !== undefined) {
+                averageValue += tableCellObj.cellNumber;
+                allCount++;
+            }
+        }
+    averageValue /= allCount;
+
+    // установка нужного числа в красные ячейки
+    for (let i = 0; i < tableArrayOnPage.length; i++)
+        for (let j = 0; j < tableArrayOnPage[i].length; j++) {
+            let tableCellObj = tableArrayOnPage[i][j];
+            if (tableCellObj !== undefined) {
+                if (tableCellObj.cellColor === 'red')
+                    tableCellObj.cellNumber = (isAllCount) ? allCount : averageValue;
+            }
+        }
+
+    // перерисовка таблицы
+    addDynamicTableToSite(tableArrayOnPage, divForResult);
+}
+
 function addDynamicTableToSite(dynamicTableArray, divForResult) {
     divForResult.innerHTML = "";
 

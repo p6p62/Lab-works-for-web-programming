@@ -187,16 +187,16 @@
             <fieldset id="lab4_setting_fieldset">
                 <legend>Работа с табличкой</legend>
                 <label>Размер таблицы (от 1 до 50)
-                    <input type="number" min="1" max="50" maxlength="2" id="lab4_table_size">
+                    <input type="number" min="1" max="50" maxlength="2" value="6" id="lab4_table_size">
                 </label>
                 <br>
                 <button onclick="createDynamicTable(lab4_table_size.value, lab4_result_dynamic_table);">Создать</button>
                 <div class="lab4_action_configure" id="lab4_action1">
                     <h4>Действие 1</h4>
                     <button onclick="action1CollumnsDelete(lab4_lessborder_number.value, lab4_result_dynamic_table);">
-                        Удалить столбцы, где произведение всех чисел меньше, чем
-                        <input type="number" id="lab4_lessborder_number" value="15">
+                        Удалить столбцы, где произведение всех чисел меньше
                     </button>
+                    <input type="number" id="lab4_lessborder_number" value="15">
                 </div>
 
                 <div id="lab4_action2">
@@ -207,7 +207,7 @@
                     <input type="radio" name="calc_type_for_action2" id="button_average">
                     <label for="button_average">Среднее арифметическое</label>
                     <br>
-                    <button>Посчитать и заполнить</button>
+                    <button onclick="action2CalcAverageOrAllCount(lab4_result_dynamic_table);">Посчитать и заполнить красные ячейки</button>
                 </div>
 
                 <div id="lab4_action3">
@@ -216,7 +216,6 @@
                 </div>
             </fieldset>
 
-            <h3>Табличка</h3>
             <div id="lab4_result_dynamic_table"></div>
         </div>
     </main>
