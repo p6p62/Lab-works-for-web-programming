@@ -7,14 +7,12 @@ function createDynamicTable(tableSize, divForResult) {
     addDynamicTableToSite(dynamicTableArray, divForResult);
 }
 
-function action1CollumnsDelete(cutoffByNumbersProduct) {
+function action1CollumnsDelete(cutoffByNumbersProduct, divForResult) {
     let cutoffNum = parseFloat(cutoffByNumbersProduct);
     if (isNaN(cutoffNum))
         return;
-    console.log('yesssss');
     if (tableArrayOnPage === null || tableArrayOnPage === undefined)
         return;
-    console.log('yesssss22222');
 
     // поиск произведений столбцов
     let colProducts = Array(tableArrayOnPage.length);
@@ -27,6 +25,16 @@ function action1CollumnsDelete(cutoffByNumbersProduct) {
             }
         }
     }
+
+    // удаление столбцов с произведением элементов меньше cutoffNum
+    for (let col = 0; col < tableArrayOnPage.length; col++) {
+        if (colProducts[col] < cutoffNum)
+            for (let row = 0; row < tableArrayOnPage.length; row++)
+                delete tableArrayOnPage[row][col];
+    }
+
+    // перерисовка таблицы
+    addDynamicTableToSite(tableArrayOnPage, divForResult);
 }
 
 function addDynamicTableToSite(dynamicTableArray, divForResult) {
