@@ -12,15 +12,23 @@ function addDynamicTableToSite(dynamicTableArray, divForResult) {
     tableHeader = document.createElement("thead");
     tableBody = document.createElement("tbody");
 
+    // отключение отступов
+    tableWithResult.style['border-collapse'] = 'collapse';
+
     // заполнение тела таблицы
     for (let row = 0; row < dynamicTableArray.length; row++) {
         tableRow = document.createElement("tr");
         for (let col = 0; col < dynamicTableArray[row].length; col++) {
             tableRowCell = document.createElement("td");
 
-            let valueFromTable = dynamicTableArray[row][col];
-            if (valueFromTable != undefined)
-                tableRowCell.innerText = valueFromTable;
+            let cellFromTable = dynamicTableArray[row][col];
+            if (cellFromTable != undefined) {
+                let cellNumber = cellFromTable.cellNumber;
+                let cellColor = cellFromTable.cellColor;
+                tableRowCell.innerText = cellNumber;
+                tableRowCell.style['background-color'] = cellColor;
+            }
+
             tableRow.appendChild(tableRowCell);
         }
         tableBody.appendChild(tableRow);
@@ -33,6 +41,9 @@ function addDynamicTableToSite(dynamicTableArray, divForResult) {
 }
 
 function getDynamicTableArray(tableSizeNumber) {
+    const DIAGONAL_CELL_COLOR = 'cyan';
+    const OTHER_CELL_COLOR = 'red';
+
     // создание каркаса двумерного массива
     var dynamicTable = Array(tableSizeNumber);
     for (let i = 0; i < tableSizeNumber; i++)
@@ -41,21 +52,28 @@ function getDynamicTableArray(tableSizeNumber) {
     // заполнение таблицы данными
     for (let i = 0; i < tableSizeNumber / 2; i++) {
         // элемент главной диагонали, направление сверху вниз
-        dynamicTable[i][i] = i + 1;
+        let elem1 = { cellNumber: i + 1, cellColor: DIAGONAL_CELL_COLOR };
+        dynamicTable[i][i] = elem1;
 
         // элемент побочной диагонали, направление сверху вниз
-        dynamicTable[i][tableSizeNumber - i - 1] = i + 1;
+        let elem2 = { cellNumber: i + 1, cellColor: DIAGONAL_CELL_COLOR };
+        dynamicTable[i][tableSizeNumber - i - 1] = elem2;
 
         // элемент побочной диагонали, направление снизу вверх
-        dynamicTable[tableSizeNumber - i - 1][i] = tableSizeNumber - i;
+        let elem3 = { cellNumber: tableSizeNumber - i, cellColor: DIAGONAL_CELL_COLOR };
+        dynamicTable[tableSizeNumber - i - 1][i] = elem3;
 
         // элемент главной диагонали, направление снизу вверх
-        dynamicTable[tableSizeNumber - i - 1][tableSizeNumber - i - 1] = tableSizeNumber - i;
+        let elem4 = { cellNumber: tableSizeNumber - i, cellColor: DIAGONAL_CELL_COLOR };
+        dynamicTable[tableSizeNumber - i - 1][tableSizeNumber - i - 1] = elem4;
 
         // заполнение промежуточных элементов
         for (let j = i + 1; j < tableSizeNumber - i - 1; j++) {
-            dynamicTable[i][j] = i + 2; // сверху
-            dynamicTable[tableSizeNumber - i - 1][j] = tableSizeNumber - i - 1; // снизу
+            let elemUp = { cellNumber: i + 2, cellColor: OTHER_CELL_COLOR };
+            dynamicTable[i][j] = elemUp; // сверху
+
+            let elemDown = { cellNumber: tableSizeNumber - i - 1, cellColor: OTHER_CELL_COLOR }
+            dynamicTable[tableSizeNumber - i - 1][j] = elemDown; // снизу
         }
     }
 
