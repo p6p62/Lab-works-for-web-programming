@@ -11,7 +11,7 @@ function calculatingFunction(x, y, aValue, nm1Value, nm2Value) {
             functionValue += addedValue;
 
             powerValue *= x;
-            factorialValue *= (n+1);
+            factorialValue *= (n + 1);
         }
     } else {
         functionValue = 1;
@@ -43,7 +43,7 @@ function tabulate(parametersArray) {
         divForResult.innerText = "Проверь заполнение значений параметров табуляции!\n";
         return;
     }
-    
+
     var xStart = tabParametersValues[0];
     var xEnd = tabParametersValues[1];
     var yStart = tabParametersValues[2];
@@ -62,13 +62,15 @@ function tabulate(parametersArray) {
 
     // вызов табуляции
     var tabulatingResult = getTableWithResults(xStart, xEnd, yStart, yEnd, step, aValue, nm1Value, nm2Value);
-    console.log(tabulatingResult);
+
+    // определение точности
+    let displayedAccuracy = document.getElementById('lab3_accuracy_value').value;
 
     // печать ответа
-    printTabulatingResult(divForResult, tabulatingResult);
+    printTabulatingResult(divForResult, tabulatingResult, displayedAccuracy);
 }
 
-function printTabulatingResult(divForResult, tabulatingResultTable) {
+function printTabulatingResult(divForResult, tabulatingResultTable, accuracy) {
     divForResult.innerHTML = "";
 
     // создание каркаса таблицы
@@ -100,13 +102,13 @@ function printTabulatingResult(divForResult, tabulatingResultTable) {
         }
 
         tableRow = document.createElement("tr");
-        
+
         xCell = document.createElement("td");
         yCell = document.createElement("td");
         fCell = document.createElement("td");
-        xCell.innerText = tabulatingResultTable[i][0];
-        yCell.innerText = tabulatingResultTable[i][1];
-        fCell.innerText = tabulatingResultTable[i][2];
+        xCell.innerText = numberToStringByAccuracy(tabulatingResultTable[i][0], accuracy);
+        yCell.innerText = numberToStringByAccuracy(tabulatingResultTable[i][1], accuracy);
+        fCell.innerText = numberToStringByAccuracy(tabulatingResultTable[i][2], accuracy);
         tableRow.appendChild(xCell);
         tableRow.appendChild(yCell);
         tableRow.appendChild(fCell);
@@ -114,8 +116,8 @@ function printTabulatingResult(divForResult, tabulatingResultTable) {
         tableBody.appendChild(tableRow);
     }
 
-    divForResult.innerText = "Максимальное значение функции: " + max + '\n';
-    divForResult.innerText += "Максимальное значение функции: " + min;
+    divForResult.innerText = "Максимальное значение функции: " + numberToStringByAccuracy(max, accuracy) + '\n';
+    divForResult.innerText += "Максимальное значение функции: " + numberToStringByAccuracy(min, accuracy);
 
     // заполнение всего блока таблицы и добавление к div-контейнеру
     tableWithResult.appendChild(tableHeader);
@@ -123,10 +125,20 @@ function printTabulatingResult(divForResult, tabulatingResultTable) {
     divForResult.appendChild(tableWithResult);
 }
 
+function numberToStringByAccuracy(numberValue, accuracy) {
+    if (!isFinite(numberValue))
+        return 'Расчет невозможен';
+    let numStrArr = numberValue.toString().split('.');
+    if (numStrArr.length > 1 && accuracy > 0)
+        return parseInt(numberValue).toString().concat('.').concat(numStrArr[1].substr(0, accuracy))
+    else
+        return numStrArr[0];
+}
+
 function getTableWithResults(xStart, xEnd, yStart, yEnd, step, aValue, nm1Value, nm2Value) {
     // число различных значений по X, умноженное на число различных значений Y
     var rowsCount = (Math.floor((xEnd - xStart) / step) + 1) * (Math.floor((yEnd - yStart) / step) + 1);
-    
+
     var resultTable = Array(rowsCount);
     for (let i = 0; i < resultTable.length; i++) {
         resultTable[i] = Array(3);
