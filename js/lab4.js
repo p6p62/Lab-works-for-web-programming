@@ -70,6 +70,24 @@ function action2CalcAverageOrAllCount(divForResult) {
     addDynamicTableToSite(tableArrayOnPage, divForResult);
 }
 
+function action3RotateTable(divForResult) {
+    if (tableArrayOnPage === null || tableArrayOnPage === undefined)
+        return;
+
+    // поворот
+    let newTableArray = [];
+    for (let i = 0; i < tableArrayOnPage.length; i++) {
+        newTableArray[i] = [];
+        for (let j = 0; j < tableArrayOnPage[i].length; j++) {
+            newTableArray[i][j] = tableArrayOnPage[j][tableArrayOnPage[i].length - 1 - i];
+        }
+    }
+    tableArrayOnPage = newTableArray;
+
+    // перерисовка
+    addDynamicTableToSite(tableArrayOnPage, divForResult);
+}
+
 function addDynamicTableToSite(dynamicTableArray, divForResult) {
     divForResult.innerHTML = "";
 
