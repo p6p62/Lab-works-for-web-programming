@@ -2,6 +2,10 @@ div#content_lab_5 {
     padding: 10px;
 }
 
+div#content_lab_5 h4 {
+    margin-bottom: 0;
+}
+
 img.lab5_picture {
     max-width: 100%;
     border: thin;
