@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="..\css\common.css">
     <link rel="stylesheet" type="text/css" href="../css/lab3.css">
     <link rel="stylesheet" type="text/css" href="../css/lab4.css">
+    <link rel="stylesheet" type="text/css" href="../css/lab5.css">
     <script src="../js/labwork_choose.js"></script>
 </head>
 
@@ -35,6 +36,11 @@
             <li>
                 <button onclick="changeLabWorkOnPage('content_lab_4')">
                     <span class="lab-number">4</span>Динамическая таблица
+                </button>
+            </li>
+            <li>
+                <button onclick="changeLabWorkOnPage('content_lab_5')">
+                    <span class="lab-number">5</span>Работа с массивами
                 </button>
             </li>
         </ul>
@@ -222,6 +228,59 @@
             </fieldset>
 
             <div id="lab4_result_dynamic_table"></div>
+        </div>
+        <div class="lab-work-content" id="content_lab_5" hidden>
+            <script src="../js/lab5.js"></script>
+            <div>
+                <img src="../other_files/images/lab5_Задание_общее.png" class="lab5_picture">
+                <img src="../other_files/images/lab5_Задание.png" class="lab5_picture">
+            </div>
+            <div id="lab5_configure_block">
+                <fieldset>
+                    <legend>Установка значений параметров</legend>
+                    <label>Диапазон для заполнения случайными числами</label>
+                    <br>
+                    От <input type="number" value="0" id="lab5_left_random_border">
+                    до <input type="number" value="5" id="lab5_right_random_border">
+                    <br>
+                    <br>
+                    <label>Размеры матриц (N - строки, M - столбцы)</label>
+                    <table>
+                        <thead>
+                            <th></th>
+                            <th>N</th>
+                            <th></th>
+                            <th>M</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>M1</td>
+                                <td>
+                                    <input type="number" min="1" value="3" id="lab5_M1_N">
+                                </td>
+                                <td>×</td>
+                                <td>
+                                    <input type="number" min="1" value="3" id="lab5_M1_M">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>M2</td>
+                                <td>
+                                    <input type="number" min="1" value="3" id="lab5_M2_N">
+                                </td>
+                                <td>×</td>
+                                <td>
+                                    <input type="number" min="1" value="3" id="lab5_M2_M">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <button>Построить матрицы и обработать их</button>
+            <div id="lab5_result">
+
+            </div>
         </div>
     </main>
     <script src="../js/on_page_loaded.js"></script>

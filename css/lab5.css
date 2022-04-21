@@ -1,0 +1,17 @@
+div#content_lab_5 {
+    padding: 10px;
+}
+
+img.lab5_picture {
+    max-width: 100%;
+    border: thin;
+    border-style: solid;
+}
+
+#lab5_configure_block fieldset {
+    display: inline-block;
+}
+
+#lab5_configure_block fieldset input{
+    max-width: 50px;
+}
