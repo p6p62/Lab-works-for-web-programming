@@ -19,3 +19,21 @@ img.lab5_picture {
 #lab5_configure_block fieldset input{
     max-width: 50px;
 }
+
+table.lab5_matrix {
+    margin-bottom: 15px;
+    border-spacing: 7px;
+    border-style: double;
+    border-width: thick;
+    border-color: black;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+table.lab5_matrix caption {
+    text-align: left;
+}
+
+table.lab5_matrix td {
+    font-weight: 500;
+}

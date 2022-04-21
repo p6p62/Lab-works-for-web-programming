@@ -7,6 +7,27 @@ function createResultForLab5() {
     // создание матриц M1 и M2
     let m1 = generateMatrixWithRandomNumbers(calcParams.m1_N, calcParams.m1_M, calcParams.leftRandomBorder, calcParams.rightRandomBorder);
     let m2 = generateMatrixWithRandomNumbers(calcParams.m2_N, calcParams.m2_M, calcParams.leftRandomBorder, calcParams.rightRandomBorder);
+
+    addMatrixOnSite(m1, 1);
+    addMatrixOnSite(m2, 2);
+}
+
+function addMatrixOnSite(matrix, matrixNumber) {
+    let tableOnSite = document.getElementById('lab5_matrix'+matrixNumber);
+    // очистка старой матрицы (удаление tbody)
+    tableOnSite.removeChild(tableOnSite.children[1]);
+
+    let tbodyNew = document.createElement('tbody');
+    matrix.forEach(row => {
+        let tr = document.createElement('tr');
+        row.forEach(item => {
+            let td = document.createElement('td');
+            td.innerText = item;
+            tr.appendChild(td);
+        });
+        tbodyNew.appendChild(tr);
+    });
+    tableOnSite.appendChild(tbodyNew);
 }
 
 function generateMatrixWithRandomNumbers(rowsCount, colsCount, leftRandomBorder, rightRandomBorder) {
