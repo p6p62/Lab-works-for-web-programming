@@ -88,6 +88,33 @@ function action3RotateTable(divForResult) {
     addDynamicTableToSite(tableArrayOnPage, divForResult);
 }
 
+function changeHiddenPanelVisibility(visibility)
+{
+    let hiddenPanels = document.getElementsByClassName('lab4_hidden_panel');
+    for (let i = 0; i < hiddenPanels.length; i++) {
+        let panel = hiddenPanels[i];
+        panel.style.visibility = visibility;
+    }
+}
+
+function changeActionsBlockOpacity(opacity) {
+    let actionsBlocks = document.getElementsByClassName('lab4_action_configure');
+    for (let i = 0; i < actionsBlocks.length; i++) {
+        let actionBlock = actionsBlocks[i];
+        actionBlock.style.opacity = opacity;
+    }
+}
+
+function showActionsBlock() {
+    changeHiddenPanelVisibility('hidden');
+    changeActionsBlockOpacity(1);
+}
+
+function closeActionsBlock() {
+    changeHiddenPanelVisibility('visible');
+    changeActionsBlockOpacity(0.2);
+}
+
 function addDynamicTableToSite(dynamicTableArray, divForResult) {
     divForResult.innerHTML = "";
 
@@ -122,6 +149,11 @@ function addDynamicTableToSite(dynamicTableArray, divForResult) {
 
     // добавление таблицы на сайт
     divForResult.appendChild(tableWithResult);
+
+    // настройка отображения панелей действий
+    let notEmptyCellCount = 0;
+    dynamicTableArray.forEach(row => row.forEach(cell => notEmptyCellCount += (cell !==undefined) ? 1 : 0));
+    (notEmptyCellCount > 0) ? showActionsBlock() : closeActionsBlock();
 }
 
 function getDynamicTableArray(tableSizeNumber) {

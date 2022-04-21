@@ -11,3 +11,13 @@ img#lab4_task_image {
 #lab4_setting_fieldset h4 {
     margin: 0;
 }
+
+div.lab4_action_configure {
+    opacity: 0.2;
+}
+
+div.lab4_hidden_panel {
+    position: absolute;
+    width: 60%;
+    height: 40%;
+}

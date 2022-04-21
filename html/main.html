@@ -192,6 +192,7 @@
                 <br>
                 <button onclick="createDynamicTable(lab4_table_size.value, lab4_result_dynamic_table);">Создать</button>
                 <div class="lab4_action_configure" id="lab4_action1">
+                    <div class="lab4_hidden_panel"></div>
                     <h4>Действие 1</h4>
                     <button onclick="action1CollumnsDelete(lab4_lessborder_number.value, lab4_result_dynamic_table);">
                         Удалить столбцы, где произведение всех чисел меньше
@@ -199,7 +200,8 @@
                     <input type="number" id="lab4_lessborder_number" value="15">
                 </div>
 
-                <div id="lab4_action2">
+                <div class="lab4_action_configure" id="lab4_action2">
+                    <div class="lab4_hidden_panel"></div>
                     <h4>Действие 2</h4>
                     <input type="radio" name="calc_type_for_action2" id="button_all_count" checked>
                     <label for="button_all_count">Общее количество</label>
@@ -207,12 +209,15 @@
                     <input type="radio" name="calc_type_for_action2" id="button_average">
                     <label for="button_average">Среднее арифметическое</label>
                     <br>
-                    <button onclick="action2CalcAverageOrAllCount(lab4_result_dynamic_table);">Посчитать и заполнить красные ячейки</button>
+                    <button onclick="action2CalcAverageOrAllCount(lab4_result_dynamic_table);">Посчитать и заполнить
+                        красные ячейки</button>
                 </div>
 
-                <div id="lab4_action3">
+                <div class="lab4_action_configure" id="lab4_action3">
+                    <div class="lab4_hidden_panel"></div>
                     <h4>Действие 3</h4>
-                    <button onclick="action3RotateTable(lab4_result_dynamic_table);">Поворот на 90° влево (против часовой)</button>
+                    <button onclick="action3RotateTable(lab4_result_dynamic_table);">Поворот на 90° влево (против
+                        часовой)</button>
                 </div>
             </fieldset>
 
