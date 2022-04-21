@@ -12,8 +12,43 @@ function createResultForLab5() {
     addMatrixOnSite(m2, 2);
 }
 
+function checkVectorsOnInclude(vector1, vector2) {
+    // проверка на равенство
+    if (vector1.join() === vector2.join())
+        return 2
+    else
+        if (vector1.length === vector2.length) // если векторы не равны, но при этом
+            return 3; // они имеют равную длину, то они точно не включают друг друга
+
+    // проверка на включение одного вектора другим
+    // так как меньший вектор точно не может включать больший,
+    // то достаточно одной проверки с упорядочиванием
+    let bigVector = vector1;
+    let smallVector = vector2;
+    let possibleResult = 0; // для учета порядка, в котором векторы пришли в параметры
+    if (vector1.length < vector2.length) {
+        bigVector = vector2;
+        smallVector = vector1;
+        possibleResult = 1;
+    }
+
+    // массив из первых элементов большого вектора без последних (smallVector.length - 1) элементов
+    let startCheckingBase = bigVector.slice(0, bigVector.length - smallVector.length + 1);
+
+    // начиная каждого элемента из startCheckingBase для всех его элементов выбирается
+    // массив-маска длиной smallVector.length, которая сравнивается с вектором smallVector
+    // после работы find оценивается результат поиска, если undefined, то "маска" пробежала
+    // до конца и не совпала ни с одним подмассивом
+    let firstIncludingIndex = startCheckingBase.find((item, index, vector) => {
+        let movingMask = bigVector.slice(index, index + smallVector.length);
+        return movingMask.join() == smallVector.join();
+    });
+
+    return (firstIncludingIndex !== undefined) ? possibleResult : 3;
+}
+
 function addMatrixOnSite(matrix, matrixNumber) {
-    let tableOnSite = document.getElementById('lab5_matrix'+matrixNumber);
+    let tableOnSite = document.getElementById('lab5_matrix' + matrixNumber);
     // очистка старой матрицы (удаление tbody)
     tableOnSite.removeChild(tableOnSite.children[1]);
 
