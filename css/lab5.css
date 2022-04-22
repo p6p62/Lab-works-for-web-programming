@@ -37,3 +37,13 @@ table.lab5_matrix caption {
 table.lab5_matrix td {
     font-weight: 500;
 }
+
+table.lab5_matrix_row {
+    border-spacing: 7px;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+table.lab5_matrix_row {
+    font-weight: 500;
+}

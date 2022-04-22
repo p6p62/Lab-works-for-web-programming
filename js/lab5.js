@@ -10,6 +10,73 @@ function createResultForLab5() {
 
     addMatrixOnSite(m1, 1);
     addMatrixOnSite(m2, 2);
+
+    let notIncludeRowsPairs = getAllPairsWithNotIncludeEachOtherRows(m1, m2);
+    addNotIncludedPairsOnSite(notIncludeRowsPairs);
+}
+
+function addNotIncludedPairsOnSite(rowPairs) {
+    let tableOnSite = document.getElementById("lab5_unincluded_rows");
+    tableOnSite.innerHTML = "";
+    if (rowPairs.length === 0) {
+        tableOnSite.innerText = "В матрицах нет строк, не включающих друг друга";
+    } else {
+        // создание заголовков таблицы
+        let thead = document.createElement('thead');
+        thead.appendChild(document.createElement('th')).innerText = 'Матрица';
+        thead.appendChild(document.createElement('th')).innerText = 'Строка';
+        thead.appendChild(document.createElement('th')).innerText = 'Индекс строки';
+        tableOnSite.appendChild(thead);
+
+        let tbody = document.createElement('tbody');
+        rowPairs.forEach(pair => {
+            let addRow = (addedRow, elementToResult) => {
+                let row = document.createElement('table');
+                row.setAttribute('class', 'lab5_matrix_row');
+                let tr = document.createElement('tr');
+                tr.appendChild(document.createElement('td')).innerText = '(';
+                addedRow.forEach(item => {
+                    tr.appendChild(document.createElement('td')).innerText = item;
+                });
+                tr.appendChild(document.createElement('td')).innerText = ')';
+
+                row.appendChild(tr);
+                elementToResult.appendChild(document.createElement('td')).appendChild(row);
+            };
+
+            let tr1 = document.createElement('tr');
+            tr1.appendChild(document.createElement('td')).innerText = 'M1';
+            addRow(pair.m1Row, tr1);
+            tr1.appendChild(document.createElement('td')).innerText = '[' + pair.m1RowIndex + ']';
+
+            let tr2 = document.createElement('tr');
+            tr2.appendChild(document.createElement('td')).innerText = 'M2';
+            addRow(pair.m2Row, tr2);
+            tr2.appendChild(document.createElement('td')).innerText = '[' + pair.m2RowIndex + ']';
+
+            tbody.appendChild(tr1);
+            tbody.appendChild(tr2);
+            tbody.appendChild(document.createElement('br')); // пустая строка для красоты
+        });
+        tbody.removeChild(tbody.lastChild); // стирается последняя пустая строка
+
+        tableOnSite.appendChild(tbody);
+    }
+}
+
+function getAllPairsWithNotIncludeEachOtherRows(matrix1, matrix2) {
+    let resultPairs = [];
+    matrix1.forEach((row1, index1) => matrix2.forEach((row2, index2) => {
+        if (checkVectorsOnInclude(row1, row2) === 3) {
+            resultPairs.push({
+                m1RowIndex: index1,
+                m1Row: row1,
+                m2RowIndex: index2,
+                m2Row: row2
+            });
+        }
+    }));
+    return resultPairs;
 }
 
 function checkVectorsOnInclude(vector1, vector2) {
