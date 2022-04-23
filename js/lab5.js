@@ -21,6 +21,8 @@ function createResultForLab5() {
     let dublicatesCount = replaceDublicatesOnInfinity(unionNotIncludeRowsVector, unionVectorAfterReplace);
     addUnionNotIncludedRowsVectorOnSite(unionVectorAfterReplace, 'lab5_union_vector_after_replace');
     document.getElementById('lab5_duclicates_count').innerText = dublicatesCount;
+
+    document.getElementById('lab5_result').style.display = 'block';
 }
 
 function replaceDublicatesOnInfinity(sourceVector, resultVector) {
