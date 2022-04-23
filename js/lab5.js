@@ -15,11 +15,37 @@ function createResultForLab5() {
     addNotIncludedPairsOnSite(notIncludeRowsPairs);
 
     let unionNotIncludeRowsVector = getUnionNotIncludeRowsVector(notIncludeRowsPairs);
-    addUnionNotIncludedRowsVectorOnSite(unionNotIncludeRowsVector);
+    addUnionNotIncludedRowsVectorOnSite(unionNotIncludeRowsVector, 'lab5_union_not_include_row_vector');
+
+    let unionVectorAfterReplace = [];
+    let dublicatesCount = replaceDublicatesOnInfinity(unionNotIncludeRowsVector, unionVectorAfterReplace);
+    addUnionNotIncludedRowsVectorOnSite(unionVectorAfterReplace, 'lab5_union_vector_after_replace');
+    document.getElementById('lab5_duclicates_count').innerText = dublicatesCount;
 }
 
-function addUnionNotIncludedRowsVectorOnSite(unionVector) {
-    let tableOnSite = document.getElementById('lab5_union_not_include_row_vector');
+function replaceDublicatesOnInfinity(sourceVector, resultVector) {
+    // прохожу по всему массиву и считаю число всех элементов
+    // потом удаляю те, у которых оно больше 1
+    let dublicates = {};
+    // поиск количества элементов
+    sourceVector.forEach(item => {
+        dublicates[item] = (dublicates.hasOwnProperty(item) ? dublicates[item] + 1 : 1);
+    });
+
+    // замещение повторений и их подсчёт
+    let count = 0;
+    sourceVector.forEach(item => {
+        if (dublicates[item] > 1) {
+            item = Infinity;
+            count++;
+        }
+        resultVector.push(item);
+    });
+    return count;
+}
+
+function addUnionNotIncludedRowsVectorOnSite(unionVector, resultTableId) {
+    let tableOnSite = document.getElementById(resultTableId);
     tableOnSite.innerHTML = "";
     if (unionVector.length === 0) {
         tableOnSite.innerText = "Пусто, так как в матрицах нет строк, не включающих друг друга";
@@ -27,7 +53,7 @@ function addUnionNotIncludedRowsVectorOnSite(unionVector) {
         let tbody = document.createElement('tbody');
         let tr = tbody.appendChild(document.createElement('tr'));
         tr.appendChild(document.createElement('td')).innerText = '(';
-        unionVector.forEach(item => tr.appendChild(document.createElement('td')).innerText = item);
+        unionVector.forEach(item => tr.appendChild(document.createElement('td')).innerText = (item !== Infinity) ? item : '∞');
         tr.appendChild(document.createElement('td')).innerText = ')';
 
         tbody.appendChild(tr);
