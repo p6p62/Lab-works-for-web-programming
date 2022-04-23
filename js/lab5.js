@@ -13,6 +13,32 @@ function createResultForLab5() {
 
     let notIncludeRowsPairs = getAllPairsWithNotIncludeEachOtherRows(m1, m2);
     addNotIncludedPairsOnSite(notIncludeRowsPairs);
+
+    let unionNotIncludeRowsVector = getUnionNotIncludeRowsVector(notIncludeRowsPairs);
+    addUnionNotIncludedRowsVectorOnSite(unionNotIncludeRowsVector);
+}
+
+function addUnionNotIncludedRowsVectorOnSite(unionVector) {
+    let tableOnSite = document.getElementById('lab5_union_not_include_row_vector');
+    tableOnSite.innerHTML = "";
+    if (unionVector.length === 0) {
+        tableOnSite.innerText = "Пусто, так как в матрицах нет строк, не включающих друг друга";
+    } else {
+        let tbody = document.createElement('tbody');
+        let tr = tbody.appendChild(document.createElement('tr'));
+        tr.appendChild(document.createElement('td')).innerText = '(';
+        unionVector.forEach(item => tr.appendChild(document.createElement('td')).innerText = item);
+        tr.appendChild(document.createElement('td')).innerText = ')';
+
+        tbody.appendChild(tr);
+        tableOnSite.appendChild(tbody);
+    }
+}
+
+function getUnionNotIncludeRowsVector(rowPairs) {
+    let result = [];
+    rowPairs.forEach(pair => result = result.concat(pair.m1Row.concat(pair.m2Row)));
+    return result;
 }
 
 function addNotIncludedPairsOnSite(rowPairs) {
