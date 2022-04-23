@@ -148,7 +148,7 @@ function generateMatrixWithRandomNumbers(rowsCount, colsCount, leftRandomBorder,
         matrix[rowIndex].fill(0);
 
         matrix[rowIndex].forEach((item, index, row) =>
-            row[index] = parseInt(leftRandomBorder + Math.random() * (rightRandomBorder - leftRandomBorder + 1)));
+            row[index] = Math.floor(leftRandomBorder + Math.random() * (rightRandomBorder - leftRandomBorder + 1)));
     });
     return resultMatrix;
 }
