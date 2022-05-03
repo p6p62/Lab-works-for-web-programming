@@ -187,24 +187,11 @@ function addMatrixOnSite(matrix, matrixNumber) {
 }
 
 function generateMatrixWithRandomNumbers(rowsCount, colsCount, leftRandomBorder, rightRandomBorder) {
-    // для задания начальной длины
-    let resultMatrix = Array(rowsCount);
-
-    // fill для начальной инициализации, чтобы работал forEach
-    // так как переданный в него массив будет общим на всю матрицу, потом переназначаю его
-    resultMatrix.fill([]);
-
-    resultMatrix.forEach((row, rowIndex, matrix) => {
-        // переназначение ссылки на общий элемент на новый, отдельный объект
-        matrix[rowIndex] = Array(colsCount);
-
-        // начальное заполнение для forEach
-        matrix[rowIndex].fill(0);
-
-        matrix[rowIndex].forEach((item, index, row) =>
-            row[index] = Math.floor(leftRandomBorder + Math.random() * (rightRandomBorder - leftRandomBorder + 1)));
-    });
-    return resultMatrix;
+    return Array(rowsCount).fill().map(
+        () => Array(colsCount).fill().map(
+            () => Math.floor(leftRandomBorder + Math.random() * (rightRandomBorder - leftRandomBorder + 1))
+        )
+    );
 }
 
 function updateParametersOnSite(parameters) {
