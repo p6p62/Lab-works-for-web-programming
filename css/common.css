@@ -61,3 +61,13 @@ ul.menu-list button {
     font-size: large;
     margin-right: 4pt;
 }
+
+.task_picture {
+    width: 100%;
+    border: thin;
+    border-style: solid;
+}
+
+.lab-work-content {
+    padding: 10px;
+}
