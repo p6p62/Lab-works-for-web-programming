@@ -322,6 +322,27 @@
             <div>
                 <img src="../other_files/images/lab6_Задание.png" class="task_picture">
             </div>
+            <div id="lab6_configure_block" class="configure-block">
+                <div>
+                    <fieldset>
+                        <legend>Установка значений параметров</legend>
+                        <label>Количество людей</label>
+                        <input type="number" id="lab6_people_count" min="1" value="5">
+                        <br>
+
+                        <label>Диапазон даты рождения</label>
+                        <br>
+                        От
+                        <input type="date" id="lab6_left_birth_date" value="1960-01-01">
+                        до
+                        <input type="date" id="lab6_right_birth_date" value="2021-12-31">
+                    </fieldset>
+                </div>
+                <button onclick="createHumans();">Создать людей</button>
+            </div>
+            <div id="lab6_result">
+
+            </div>
         </div>
     </main>
     <script src="../js/on_page_loaded.js"></script>

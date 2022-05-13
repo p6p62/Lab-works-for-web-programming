@@ -71,3 +71,7 @@ ul.menu-list button {
 .lab-work-content {
     padding: 10px;
 }
+
+.configure-block fieldset {
+    display: inline-block;
+}
