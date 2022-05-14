@@ -4,6 +4,50 @@ function createHumans() {
 
     // перезапись параметров обратно (если вдруг были неверные)
     rewriteParametersOnSite(parameters);
+
+    // создание объектов людей и добавление на сайт
+    let humanArray = getHumansArray(parameters);
+    addHumansOnSite(humanArray);
+}
+
+function addHumansOnSite(humanArray) {
+    let divForResult = document.getElementById("lab6_result");
+    divForResult.innerHTML = "";
+
+    // создание структуры таблицы с объектами
+    let table = document.createElement("table");
+    let thead = table.appendChild(document.createElement("thead"));
+    let tbody = table.appendChild(document.createElement("tbody"));
+
+    // заполнение заголовков
+    let thFio = document.createElement("th");
+    thFio.textContent = "ФИО";
+    let thFloor = document.createElement("th");
+    thFloor.textContent = "Пол";
+    let thBirthDate = document.createElement("th");
+    thBirthDate.textContent = "Дата рождения";
+    let thPhoneNumber = document.createElement("th");
+    thPhoneNumber.textContent = "Номер телефона";
+    let thLiveAddress = document.createElement("th");
+    thLiveAddress.textContent = "Адрес проживания";
+    thead.appendChild(thFio);
+    thead.appendChild(thFloor);
+    thead.appendChild(thBirthDate);
+    thead.appendChild(thPhoneNumber);
+    thead.appendChild(thLiveAddress);
+
+    // добавление людей в таблицу
+    for (let i = 0; i < humanArray.length; i++) {
+        let tr = tbody.appendChild(document.createElement("tr"));
+
+        for (const key in humanArray[i]) {
+            let td = tr.appendChild(document.createElement("td"));
+            td.textContent = humanArray[i][key].toString();
+        }
+    }
+
+    //добавление таблицы на сайт
+    divForResult.appendChild(table);
 }
 
 function Human(fio, isWoman, birthDate, phoneNumber, liveAddress) {
@@ -18,12 +62,16 @@ function FIO(lastName, firstName, patronymic) {
     this.lastName = lastName;
     this.firstName = firstName;
     this.patronymic = patronymic;
+
+    this.toString = () => lastName + ' ' + firstName + ' ' + patronymic;
 }
 
 function BitrhDate(day, month, year) {
     this.day = day;
     this.month = month;
     this.year = year;
+
+    this.toString = () => day + '.' + ((('0' + month).length > 2) ? month : '0' + month) + '.' + year;
 }
 
 function LiveAddress(city, street, houseNumber, apartmentNumber) {
@@ -31,22 +79,25 @@ function LiveAddress(city, street, houseNumber, apartmentNumber) {
     this.street = street;
     this.houseNumber = houseNumber;
     this.apartmentNumber = apartmentNumber;
+
+    this.toString = () => city + ', ул. ' + street + ', д. ' + houseNumber + ', кв. ' + apartmentNumber;
 }
 
 function getFIORandom(isWoman) {
-
+    // TODO
+    return new FIO("Петров", "Петр", "Петрович");
 }
 
 function getBirthDateRandom(leftBorder, rightBorder) {
-
+    return new BitrhDate(14, 10, 1970);
 }
 
 function getPhoneNumberRandom() {
-
+    return "+79109050603";
 }
 
 function getLiveAddressRandom() {
-
+    return new LiveAddress("Рязань", "Щедрина", 43, 13);
 }
 
 function getHumansArray(parameters) {
@@ -55,12 +106,16 @@ function getHumansArray(parameters) {
         let isWoman = Math.round(Math.random()) == 0; // случайное bool-значение
         humanArray[i] = new Human(
             getFIORandom(isWoman),
-            isWoman,
+            {
+                isWoman: isWoman,
+                toString: () => (isWoman) ? "Ж" : "М"
+            },
             getBirthDateRandom(parameters.leftBorderBirthDate, parameters.rightBorderBirthDate),
             getPhoneNumberRandom(),
             getLiveAddressRandom()
         );
     }
+    return humanArray;
 }
 
 function rewriteParametersOnSite(parameters) {
