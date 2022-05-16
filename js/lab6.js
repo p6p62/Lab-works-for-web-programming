@@ -84,8 +84,28 @@ function LiveAddress(city, street, houseNumber, apartmentNumber) {
 }
 
 function getFIORandom(isWoman) {
-    // TODO
-    return new FIO("Петров", "Петр", "Петрович");
+    let maleNames = ["Сергей", "Михаил", "Петр", "Александр", "Дмитрий"];
+    let maleLastNames = ["Волков", "Петров", "Зайцев", "Иванов"];
+    let malePatronymics = ["Александрович", "Семёнович", "Дмитриевич", "Константинович"];
+
+    let femaleNames = ["Алла", "Анна", "Екатерина", "Виктория"];
+    let femaleLastNames = ["Смирнова", "Котова", "Макарова"];
+    let femalePatronymics = ["Александровна", "Сергеевна", "Константиновна", "Викторовна", "Николаевна"];
+
+    let names, lastNames, patronymics;
+    if (isWoman) {
+        names = femaleNames;
+        lastNames = femaleLastNames;
+        patronymics = femalePatronymics;
+    } else {
+        names = maleNames;
+        lastNames = maleLastNames;
+        patronymics = malePatronymics;
+    }
+
+    let getRandomElement = (array) => array[Math.floor(Math.random() * array.length)];
+
+    return new FIO(getRandomElement(lastNames), getRandomElement(names), getRandomElement(patronymics));
 }
 
 function getBirthDateRandom(leftBorder, rightBorder) {
@@ -93,7 +113,7 @@ function getBirthDateRandom(leftBorder, rightBorder) {
 }
 
 function getPhoneNumberRandom() {
-    return "+79109050603";
+    return "+79" + (Math.floor(Math.random()*900000000) + 100000000);
 }
 
 function getLiveAddressRandom() {
