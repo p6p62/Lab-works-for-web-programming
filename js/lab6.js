@@ -109,11 +109,14 @@ function getFIORandom(isWoman) {
 }
 
 function getBirthDateRandom(leftBorder, rightBorder) {
-    return new BitrhDate(14, 10, 1970);
+    let randTimeNumber = Math.floor((rightBorder.getTime() - leftBorder.getTime()) * Math.random() + 1) + leftBorder.getTime();
+    let date = new Date();
+    date.setTime(randTimeNumber);
+    return new BitrhDate(date.getDate(), date.getMonth() + 1, date.getFullYear());
 }
 
 function getPhoneNumberRandom() {
-    return "+79" + (Math.floor(Math.random()*900000000) + 100000000);
+    return "+79" + (Math.floor(Math.random() * 99999999) + 100000000);
 }
 
 function getLiveAddressRandom() {
