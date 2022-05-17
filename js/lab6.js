@@ -12,6 +12,34 @@ function createHumans() {
     addHumansOnSite(humansArrayOnPage);
 }
 
+function filterHumans() {
+    // чтение данных
+    let strCity = document.getElementById("lab6_search_city").value;
+    let floorStr = document.getElementById("lab6_search_floor").value;
+    let leftYearStr = document.getElementById("lab6_year_range_left").value;
+    let rightYearStr = document.getElementById("lab6_year_range_right").value;
+
+    // если был задан город
+    if (strCity != "") {
+        humansArrayOnPage = humansArrayOnPage.filter(element => element.liveAddress.city == strCity);
+    }
+
+    // если был задан пол
+    if (floorStr != "") {
+        humansArrayOnPage = humansArrayOnPage.filter(element => element.isWoman.isWoman == (floorStr == "female"));
+    }
+
+    // если была задана одна из границ для года рождения
+    if (leftYearStr != "") {
+        humansArrayOnPage = humansArrayOnPage.filter(element => element.birthDate.year >= parseInt(leftYearStr));
+    }
+    if (rightYearStr != "") {
+        humansArrayOnPage = humansArrayOnPage.filter(element => element.birthDate.year <= parseInt(rightYearStr));
+    }
+
+    addHumansOnSite(humansArrayOnPage);
+}
+
 function serializeToJSON() {
     if (humansArrayOnPage != null && humansArrayOnPage != undefined) {
         let jsonStr;

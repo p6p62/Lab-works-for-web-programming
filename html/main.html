@@ -372,9 +372,11 @@
                         <br>
                         <label>
                             Пол<br>
-                            <label>-не выбрано-<input type="radio" name="radio_buttons_floor" value="" checked></label>
-                            <label>Мужской<input type="radio" name="radio_buttons_floor" value="0"></label>
-                            <label>Женский<input type="radio" name="radio_buttons_floor" value="1"></label>
+                            <select id="lab6_search_floor">
+                                <option value="">-не выбрано-</option>
+                                <option value="male">Мужской</option>
+                                <option value="female">Женский</option>
+                            </select>
                         </label>
                         <br>
                         <label>
@@ -383,7 +385,7 @@
                             <label>до <input type="number" id="lab6_year_range_right"></label>
                         </label>
                         <br>
-                        <button>Отобрать</button>
+                        <button onclick="filterHumans();">Отобрать</button>
                     </fieldset>
                     <br>
                     <fieldset>
