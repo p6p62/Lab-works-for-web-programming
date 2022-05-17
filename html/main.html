@@ -342,19 +342,83 @@
             </div>
             <div id="lab6_actions_block" class="actions-block configure-block">
                 <fieldset>
-                    <legend>Действия</legend>
-                    <div>
-                        <button onclick="serializeToJSON();">Получить JSON-представление</button>
-                        <label><input id="lab6_str_format_checkbox" type="checkbox" checked>Многострочный вид</label>
+                    <legend style="font-size: x-large;">Действия</legend>
+                    <fieldset>
+                        <legend>Сериализация</legend>
+                        <div>
+                            <button onclick="serializeToJSON();">Получить JSON-представление</button>
+                            <label><input id="lab6_str_format_checkbox" type="checkbox" checked>Многострочный
+                                вид</label>
+                            <br>
+                            <textarea id="lab6_JSON_output" placeholder="Здесь будет результат сериализации"></textarea>
+                        </div>
                         <br>
-                        <textarea id="lab6_JSON_output" placeholder="Здесь будет результат сериализации"></textarea>
-                    </div>
+                        <div>
+                            <textarea id="lab6_JSON_input"
+                                placeholder="Помести сюда JSON-текст для загрузки"></textarea>
+                            <br>
+                            <button onclick="loadFromJSON();">Загрузить в таблицу из JSON-представления</button>
+                        </div>
+                    </fieldset>
                     <br>
-                    <div>
-                        <textarea id="lab6_JSON_input" placeholder="Помести сюда JSON-текст для загрузки"></textarea>
+                    <fieldset>
+                        <legend>Поиск людей</legend>
+                        <p>Введи данные для отбора в нужные поля. Если по какому-либо полю не нужен отбор (то есть,
+                            принимаются все его значения), то оставь его пустым</p>
+                        <label>
+                            Город<br>
+                            <input type="text" id="lab6_search_city">
+                        </label>
                         <br>
-                        <button onclick="loadFromJSON();">Загрузить в таблицу из JSON-представления</button>
-                    </div>
+                        <label>
+                            Пол<br>
+                            <label>-не выбрано-<input type="radio" name="radio_buttons_floor" value="" checked></label>
+                            <label>Мужской<input type="radio" name="radio_buttons_floor" value="0"></label>
+                            <label>Женский<input type="radio" name="radio_buttons_floor" value="1"></label>
+                        </label>
+                        <br>
+                        <label>
+                            Диапазон годов рождения<br>
+                            <label>От <input type="number" id="lab6_year_range_left"> </label>
+                            <label>до <input type="number" id="lab6_year_range_right"></label>
+                        </label>
+                        <br>
+                        <button>Отобрать</button>
+                    </fieldset>
+                    <br>
+                    <fieldset>
+                        <legend>Удаление даты рождения</legend>
+                        <label>
+                            Наибольший разрешенный год рождения
+                            <input type="number" id="lab6_year_delete_border">
+                        </label>
+                        <br>
+                        <button>Удалить дату рождения, если её год больше</button>
+                    </fieldset>
+                    <br>
+                    <fieldset>
+                        <legend>Добавление информации об адресе</legend>
+                        <label>
+                            Маска для поиска номера телефона
+                            <input type="text" id="lab6_phone_search_mask">
+                        </label>
+                        <br>
+                        Заменить:
+                        <br>
+                        <label><input type="radio" name="radio_buttons_phone_search_mode" checked>Первое
+                            совпадение</label>
+                        <br>
+                        <label><input type="radio" name="radio_buttons_phone_search_mode">Все совпадения</label>
+                        <br>
+                        <br>
+                        Новый адрес проживания<br>
+                        <label>Город <input type="text" id="lab6_add_city"></label><br>
+                        <label>Улица <input type="text" id="lab6_add_street"></label><br>
+                        <label>Дом <input type="text" id="lab6_add_house"></label><br>
+                        <label>Квартира <input type="text" id="lab6_add_apartment"></label><br>
+                        <br>
+                        <button>Добавить</button>
+                    </fieldset>
                 </fieldset>
             </div>
             <div id="lab6_result">
