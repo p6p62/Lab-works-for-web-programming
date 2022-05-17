@@ -12,6 +12,23 @@ function createHumans() {
     addHumansOnSite(humansArrayOnPage);
 }
 
+function deleteBirthDateByUpCuttingBorder() {
+    let maxSavedYear = parseInt(document.getElementById("lab6_year_delete_border").value);
+    humansArrayOnPage.forEach(element => {
+        if (element.birthDate.year > maxSavedYear) {
+            // можно было бы удалить всё свойство через delete, как в строке ниже, но тогда пришлось бы переделывать вывод, поэтому так
+            // delete element.birthDate;
+
+            delete element.birthDate.day;
+            delete element.birthDate.month;
+            delete element.birthDate.year;
+
+            element.birthDate.toString = () => "";
+        }
+    });
+    addHumansOnSite(humansArrayOnPage);
+}
+
 function filterHumans() {
     // чтение данных
     let strCity = document.getElementById("lab6_search_city").value;
@@ -64,7 +81,12 @@ function convertRawArrayToHumanArray(parsedArray) {
     parsedArray.forEach(element => {
         element.fio.toString = (key) => key.lastName + ' ' + key.firstName + ' ' + key.patronymic;
         element.isWoman.toString = (key) => (key.isWoman) ? "Ж" : "М";
-        element.birthDate.toString = (key) => key.day + '.' + ((('0' + key.month).length > 2) ? key.month : '0' + key.month) + '.' + key.year;
+        element.birthDate.toString = (key) => {
+            let strDate = key.day + '.' + ((('0' + key.month).length > 2) ? key.month : '0' + key.month) + '.' + key.year;
+            if (strDate.includes("undefined"))
+                strDate = "";
+            return strDate;
+        };
         element.liveAddress.toString = (key) => key.city + ', ул. ' + key.street + ', д. ' + key.houseNumber + ', кв. ' + key.apartmentNumber;
     });
 }
@@ -125,7 +147,7 @@ function FIO(lastName, firstName, patronymic) {
     this.toString = () => lastName + ' ' + firstName + ' ' + patronymic;
 }
 
-function BitrhDate(day, month, year) {
+function BirthDate(day, month, year) {
     this.day = day;
     this.month = month;
     this.year = year;
@@ -169,7 +191,7 @@ function getBirthDateRandom(leftBorder, rightBorder) {
     let randTimeNumber = Math.floor((rightBorder.getTime() - leftBorder.getTime()) * Math.random() + 1) + leftBorder.getTime();
     let date = new Date();
     date.setTime(randTimeNumber);
-    return new BitrhDate(date.getDate(), date.getMonth() + 1, date.getFullYear());
+    return new BirthDate(date.getDate(), date.getMonth() + 1, date.getFullYear());
 }
 
 function getPhoneNumberRandom() {
