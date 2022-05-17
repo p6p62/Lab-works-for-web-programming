@@ -103,8 +103,6 @@ function getFIORandom(isWoman) {
         patronymics = malePatronymics;
     }
 
-    let getRandomElement = (array) => array[Math.floor(Math.random() * array.length)];
-
     return new FIO(getRandomElement(lastNames), getRandomElement(names), getRandomElement(patronymics));
 }
 
@@ -120,7 +118,13 @@ function getPhoneNumberRandom() {
 }
 
 function getLiveAddressRandom() {
-    return new LiveAddress("Рязань", "Щедрина", 43, 13);
+    let cities = ["Рязань", "Москва", "Новосибирск", "Мурманск"];
+    let streets = ["Щедрина", "Ленина", "Пушкина", "Гагарина"];
+
+    const HOUSE_MAX_NUMBER = 100;
+    const APARTMENT_MAX_NUMBER = 150;
+
+    return new LiveAddress(getRandomElement(cities), getRandomElement(streets), Math.floor(Math.random() * HOUSE_MAX_NUMBER) + 1, Math.floor(Math.random() * APARTMENT_MAX_NUMBER) + 1);
 }
 
 function getHumansArray(parameters) {
@@ -171,4 +175,8 @@ function getParameters() {
     }
 
     return defaultParameters;
+}
+
+function getRandomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
 }
