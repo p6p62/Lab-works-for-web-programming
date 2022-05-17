@@ -12,7 +12,39 @@ function createHumans() {
     addHumansOnSite(humansArrayOnPage);
 }
 
+function addInformationAboutLiveAddress() {
+    if (humansArrayOnPage == null || humansArrayOnPage == undefined)
+        return;
+
+    let maskPhoneNumber = document.getElementById("lab6_phone_search_mask").value;
+    let humansForAddressSetting = [];
+
+    // определение режима установки адреса
+    // если установка один раз - то функция поиска даст только 1 элемент, иначе массив всех подходящих
+    let isOneSet = document.getElementsByName("radio_buttons_phone_search_mode")[0].checked;
+
+    if (isOneSet) {
+        humansForAddressSetting.push(humansArrayOnPage.find(element => element.phoneNumber.startsWith(maskPhoneNumber)));
+    } else {
+        humansArrayOnPage.filter(element => element.phoneNumber.startsWith(maskPhoneNumber)).forEach(element => humansForAddressSetting.push(element));
+    }
+
+    // чтение данных об адресе
+    let city = document.getElementById("lab6_add_city").value;
+    let street = document.getElementById("lab6_add_street").value;
+    let houseNumber = parseInt(document.getElementById("lab6_add_house").value);
+    let apartmentNumber = parseInt(document.getElementById("lab6_add_apartment").value);
+
+    humansForAddressSetting.forEach(element => {
+        element.liveAddress = new LiveAddress(city, street, houseNumber, apartmentNumber);
+    });
+
+    addHumansOnSite(humansArrayOnPage);
+}
+
 function deleteBirthDateByUpCuttingBorder() {
+    if (humansArrayOnPage == null || humansArrayOnPage == undefined)
+        return;
     let maxSavedYear = parseInt(document.getElementById("lab6_year_delete_border").value);
     humansArrayOnPage.forEach(element => {
         if (element.birthDate.year > maxSavedYear) {
@@ -30,6 +62,8 @@ function deleteBirthDateByUpCuttingBorder() {
 }
 
 function filterHumans() {
+    if (humansArrayOnPage == null || humansArrayOnPage == undefined)
+        return;
     // чтение данных
     let strCity = document.getElementById("lab6_search_city").value;
     let floorStr = document.getElementById("lab6_search_floor").value;
