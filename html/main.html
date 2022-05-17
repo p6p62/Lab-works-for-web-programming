@@ -340,6 +340,23 @@
                 </div>
                 <button onclick="createHumans();">Создать людей</button>
             </div>
+            <div id="lab6_actions_block" class="actions-block configure-block">
+                <fieldset>
+                    <legend>Действия</legend>
+                    <div>
+                        <button onclick="serializeToJSON();">Получить JSON-представление</button>
+                        <label><input id="lab6_str_format_checkbox" type="checkbox" checked>Многострочный вид</label>
+                        <br>
+                        <textarea id="lab6_JSON_output" placeholder="Здесь будет результат сериализации"></textarea>
+                    </div>
+                    <br>
+                    <div>
+                        <textarea id="lab6_JSON_input" placeholder="Помести сюда JSON-текст для загрузки"></textarea>
+                        <br>
+                        <button onclick="loadFromJSON();">Загрузить в таблицу из JSON-представления</button>
+                    </div>
+                </fieldset>
+            </div>
             <div id="lab6_result">
 
             </div>

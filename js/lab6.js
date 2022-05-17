@@ -1,3 +1,5 @@
+var humansArrayOnPage;
+
 function createHumans() {
     // чтение параметров генерации
     let parameters = getParameters();
@@ -6,8 +8,37 @@ function createHumans() {
     rewriteParametersOnSite(parameters);
 
     // создание объектов людей и добавление на сайт
-    let humanArray = getHumansArray(parameters);
-    addHumansOnSite(humanArray);
+    humansArrayOnPage = getHumansArray(parameters);
+    addHumansOnSite(humansArrayOnPage);
+}
+
+function serializeToJSON() {
+    if (humansArrayOnPage != null && humansArrayOnPage != undefined) {
+        let jsonStr;
+        if (document.getElementById("lab6_str_format_checkbox").checked) {
+            jsonStr = JSON.stringify(humansArrayOnPage, null, "    ");
+        } else {
+            jsonStr = JSON.stringify(humansArrayOnPage);
+        }
+        document.getElementById("lab6_JSON_output").value = jsonStr;
+    }
+}
+
+function loadFromJSON() {
+    let jsonStr = document.getElementById("lab6_JSON_input").value;
+    let parsedArray = JSON.parse(jsonStr);
+    convertRawArrayToHumanArray(parsedArray);
+    humansArrayOnPage = parsedArray;
+    addHumansOnSite(humansArrayOnPage);
+}
+
+function convertRawArrayToHumanArray(parsedArray) {
+    parsedArray.forEach(element => {
+        element.fio.toString = (key) => key.lastName + ' ' + key.firstName + ' ' + key.patronymic;
+        element.isWoman.toString = (key) => (key.isWoman) ? "Ж" : "М";
+        element.birthDate.toString = (key) => key.day + '.' + ((('0' + key.month).length > 2) ? key.month : '0' + key.month) + '.' + key.year;
+        element.liveAddress.toString = (key) => key.city + ', ул. ' + key.street + ', д. ' + key.houseNumber + ', кв. ' + key.apartmentNumber;
+    });
 }
 
 function addHumansOnSite(humanArray) {
@@ -42,7 +73,7 @@ function addHumansOnSite(humanArray) {
 
         for (const key in humanArray[i]) {
             let td = tr.appendChild(document.createElement("td"));
-            td.textContent = humanArray[i][key].toString();
+            td.textContent = humanArray[i][key].toString(humanArray[i][key]);
         }
     }
 

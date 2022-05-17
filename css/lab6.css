@@ -1,4 +1,4 @@
-div#lab6_result table, td {
+div#lab6_result table, div#lab6_result td {
     border-style: solid;
     border-color: #755C48;
     border-collapse: collapse;
@@ -11,4 +11,9 @@ div#lab6_result th {
 
 div#lab6_result td {
     text-align: center;
+}
+
+#content_lab_6 h3, h4, h5, h6
+{
+    margin: 0;
 }
