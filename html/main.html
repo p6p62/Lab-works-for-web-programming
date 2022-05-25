@@ -440,6 +440,107 @@
             <div>
                 <img src="../other_files/images/lab7_Задание.png" class="task_picture">
             </div>
+            <div id="lab7_configure_block" class="configure-block">
+                <fieldset>
+                    <legend>Настройка расчёта</legend>
+                    <table>
+                        <thead>
+                            <th>Характеристики функции</th>
+                            <th>Варианты функции</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding-right: 10px;">
+                                    <div>
+                                        <input type="checkbox" id="lab7_checkbox_average">
+                                        <label for="lab7_checkbox_average">
+                                            Среднее значение
+                                        </label><br>
+
+                                        <input type="checkbox" id="lab7_checkbox_zero_count">
+                                        <label for="lab7_checkbox_zero_count">
+                                            Количество нулевых значений
+                                        </label><br>
+
+                                        <input type="checkbox" id="lab7_checkbox_negative_count">
+                                        <label for="lab7_checkbox_negative_count">
+                                            Количество отрицательных значений
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <input type="checkbox" id="lab7_checkbox_memoized">
+                                        <label for="lab7_checkbox_memoized">
+                                            Мемоизированная (хранит вычисленные значения)
+                                        </label><br>
+
+                                        <input type="checkbox" id="lab7_checkbox_for_debug">
+                                        <label for="lab7_checkbox_for_debug">
+                                            Отладочная (выводит в консоль время вызова, аргумент и значение)
+                                        </label><br>
+
+                                        <input type="checkbox" id="lab7_checkbox_save_calls">
+                                        <label for="lab7_checkbox_save_calls">
+                                            С сохранением числа вызовов
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table>
+                        <thead>
+                            <th>Настройка взятия точек функции</th>
+                            <th>Выбор функции</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding-right: 10px;">
+                                    <table>
+                                        <tr>
+                                            <td>h</td>
+                                            <td>
+                                                <input type="number" min="0" id="lab7_calc_step" value="0.5">
+                                            </td>
+                                            <td>- шаг</td>
+                                        </tr>
+                                        <tr>
+                                            <td>a</td>
+                                            <td>
+                                                <input type="number" id="lab7_calc_a" value="-3">
+                                            </td>
+                                            <td>- левая граница промежутка</td>
+                                        </tr>
+                                        <tr>
+                                            <td>b</td>
+                                            <td>
+                                                <input type="number" id="lab7_calc_b" value="5">
+                                            </td>
+                                            <td>- правая граница промежутка</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <div>
+                                        <input type="radio" name="lab7_function_number" id="lab7_radiobutton1" checked>
+                                        <label for="lab7_radiobutton1">f1</label><br>
+
+                                        <input type="radio" name="lab7_function_number" id="lab7_radiobutton2">
+                                        <label for="lab7_radiobutton2">f2</label><br>
+                                        
+                                        <input type="radio" name="lab7_function_number" id="lab7_radiobutton3">
+                                        <label for="lab7_radiobutton3">f3</label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button>Выполнить расчёт</button>
+                </fieldset>
+            </div>
         </div>
     </main>
     <script src="../js/on_page_loaded.js"></script>
