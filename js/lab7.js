@@ -4,6 +4,12 @@ function calculateButtonClick() {
 
     // получение функции для расчёта
     let configuredFunction = getSpecifiedFunction();
+
+    // расчёт значений функции по равноотстоящим точкам
+    let functionCalculatingResult = calculateFunctionInPoints(configuredFunction, parameters.a, parameters.b, parameters.h);
+
+    // вывод на сайт
+    printTabulatingResult(document.getElementById("lab7_function_calculate_result"), functionCalculatingResult);
 }
 
 function getSpecifiedFunction() {
@@ -31,7 +37,8 @@ function makeDebugging(f) {
         console.log("Аргумент(ы): " + argsStr);
 
         let result = f.apply(null, arguments);
-        console.log("Значение: " + result);
+        console.log("Значение: " + result);0
+        console.log("");
         return result;
     }
 }
@@ -55,6 +62,64 @@ function f2(x) {
 
 function f3(x) {
     return Math.sqrt(Math.pow(x, 3) + 6 * x) / (Math.pow(x, 5) - 4 * x);
+}
+
+function calculateFunctionInPoints(f, a, b, h) {
+    let result = { args: [], results: [] };
+    while (a < b) {
+        result.args.push(a);
+        result.results.push(f(a));
+        a += h;
+    }
+    return result;
+}
+
+function printTabulatingResult(divForResult, calculatingFunctionResult) {
+    const accuracy = 3; // точность (число знаков после запятой в числах)
+
+    divForResult.innerHTML = "";
+
+    // создание каркаса таблицы
+    tableWithResult = document.createElement("table");
+    tableHeader = document.createElement("thead");
+    tableBody = document.createElement("tbody");
+
+    // заполнение заголовка таблицы
+    xHeader = document.createElement("th");
+    xHeader.innerText = "x";
+    fHeader = document.createElement("th");
+    fHeader.innerText = "f(x)";
+    tableHeader.appendChild(xHeader);
+    tableHeader.appendChild(fHeader);
+
+    // заполнение тела таблицы
+    for (let i = 0; i < calculatingFunctionResult.args.length; i++) {
+        tableRow = document.createElement("tr");
+
+        xCell = document.createElement("td");
+        fCell = document.createElement("td");
+        xCell.innerText = numberToStringByAccuracy(calculatingFunctionResult.args[i], accuracy);
+        fCell.innerText = numberToStringByAccuracy(calculatingFunctionResult.results[i], accuracy);
+        tableRow.appendChild(xCell);
+        tableRow.appendChild(fCell);
+
+        tableBody.appendChild(tableRow);
+    }
+
+    // заполнение всего блока таблицы и добавление к div-контейнеру
+    tableWithResult.appendChild(tableHeader);
+    tableWithResult.appendChild(tableBody);
+    divForResult.appendChild(tableWithResult);
+}
+
+function numberToStringByAccuracy(numberValue, accuracy) {
+    if (!isFinite(numberValue))
+        return 'Расчет невозможен';
+    let numStrArr = numberValue.toString().split('.');
+    if (numStrArr.length > 1 && accuracy > 0)
+        return parseInt(numberValue).toString().concat('.').concat(numStrArr[1].substr(0, accuracy))
+    else
+        return numStrArr[0];
 }
 
 function getCalculationParameters() {

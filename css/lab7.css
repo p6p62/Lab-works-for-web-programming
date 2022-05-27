@@ -1,3 +1,16 @@
 #content_lab_7 img:first-child {
     max-width: 900px;
 }
+
+#lab7_function_calculate_result table {
+    border: thick;
+    border-style: solid;
+}
+
+#lab7_function_calculate_result table td {
+    padding-right: 20px;
+}
+
+#lab7_function_calculate_result table td:last-child {
+    padding-right: 0;
+}
