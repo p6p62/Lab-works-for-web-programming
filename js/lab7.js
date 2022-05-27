@@ -1,4 +1,7 @@
 function calculateButtonClick() {
+    // получение параметров для расчёта
+    let parameters = getCalculationParameters();
+
     // получение функции для расчёта
     let configuredFunction = getSpecifiedFunction();
 }
@@ -52,4 +55,35 @@ function f2(x) {
 
 function f3(x) {
     return Math.sqrt(Math.pow(x, 3) + 6 * x) / (Math.pow(x, 5) - 4 * x);
+}
+
+function getCalculationParameters() {
+    // параметры со значениями по умолчанию
+    let parameters = {
+        a: -3,
+        b: 5,
+        h: 0.5
+    };
+
+    let a = parseFloat(document.getElementById('lab7_calc_a').value);
+    let b = parseFloat(document.getElementById('lab7_calc_b').value);
+    let h = parseFloat(document.getElementById('lab7_calc_step').value);
+
+    if (!isNaN(a))
+        parameters.a = Math.min(a, b);
+
+    if (!isNaN(b))
+        parameters.b = Math.max(a, b);
+
+    if (!isNaN(h) && h != 0)
+        parameters.h = Math.abs(h);
+
+    rewriteParametersOnSite(parameters);
+    return parameters;
+}
+
+function rewriteParametersOnSite(parameters) {
+    document.getElementById('lab7_calc_a').value = parameters.a;
+    document.getElementById('lab7_calc_b').value = parameters.b;
+    document.getElementById('lab7_calc_step').value = parameters.h;
 }
