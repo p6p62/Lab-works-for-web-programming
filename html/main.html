@@ -524,13 +524,16 @@
                                 </td>
                                 <td style="vertical-align: top;">
                                     <div>
-                                        <input type="radio" name="lab7_function_number" id="lab7_radiobutton1" checked>
+                                        <input type="radio" name="lab7_function_number" value="1" id="lab7_radiobutton1"
+                                            checked>
                                         <label for="lab7_radiobutton1">f1</label><br>
 
-                                        <input type="radio" name="lab7_function_number" id="lab7_radiobutton2">
+                                        <input type="radio" name="lab7_function_number" value="2"
+                                            id="lab7_radiobutton2">
                                         <label for="lab7_radiobutton2">f2</label><br>
-                                        
-                                        <input type="radio" name="lab7_function_number" id="lab7_radiobutton3">
+
+                                        <input type="radio" name="lab7_function_number" value="3"
+                                            id="lab7_radiobutton3">
                                         <label for="lab7_radiobutton3">f3</label>
                                     </div>
                                 </td>
@@ -538,7 +541,9 @@
                         </tbody>
                     </table>
 
-                    <button>Выполнить расчёт</button>
+                    <button onclick="calculateButtonClick();">
+                        Выполнить расчёт
+                    </button>
                 </fieldset>
             </div>
         </div>
