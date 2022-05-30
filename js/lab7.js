@@ -25,6 +25,10 @@ function getSpecifiedFunction() {
 
     let f = getSelectedFunction(functionNumberStr);
 
+    // если была задана мемоизация
+    if (isMemoized)
+        f = makeMemoized(f);
+
     // если была задана отладка
     if (isDebugging)
         f = makeDebugging(f);
@@ -33,6 +37,17 @@ function getSpecifiedFunction() {
     if (isCallSaved)
         f = makeCallSaved(f);
     return f;
+}
+
+function makeMemoized(f) {
+    var cache = {};
+    var memoizedF = function () {
+        let key = arguments.length + ':' + [].join.call(arguments, ' ');
+        cache[key] = f.apply(null, arguments);
+        return cache[key];
+    };
+    memoizedF.getCacheSize = () => Object.keys(cache).length;
+    return memoizedF;
 }
 
 function makeDebugging(f) {

@@ -553,8 +553,7 @@
                     <div>
                         <h4>Однократный расчёт</h4>
                         <label for="lab7_one_call_arg">x = </label>
-                        <input type="number" id="lab7_one_call_arg"
-                            onchange="lab7_one_call_result.value = '';"
+                        <input type="number" id="lab7_one_call_arg" onchange="lab7_one_call_result.value = '';"
                             onkeydown="lab7_one_call_arg.onchange();">
                         <button onclick="makeSingleCalculate();">Посчитать</button><br>
 
@@ -564,6 +563,9 @@
 
                     <div>
                         <h4>Для мемоизированной</h4>
+                        <button onclick="alert('Число предрасчитанных значений: ' + functionOnPage.getCacheSize());">
+                            Узнать число предрасчитанных значений
+                        </button>
                     </div>
 
                     <div class="lab7_actions_call_saved">
