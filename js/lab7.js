@@ -25,17 +25,23 @@ function getSpecifiedFunction() {
 
     let f = getSelectedFunction(functionNumberStr);
 
-    // если была задана мемоизация
-    if (isMemoized)
-        f = makeMemoized(f);
+    // Если isNeedWrap истинно, возвращает функцию wrappedF, обёрнутую оборачивающей
+    // функцией wrappingFunction, "поднимая" при этом все собственные методы и свойства
+    // wrappedF, чтобы они были доступны в возвращаемой функции
+    // Если isNeedWrap ложно, то возвращает исходную функцию wrappedF
+    let getWrapFunction = (wrappedF, wrappingFunction, isNeedWrap) => {
+        let result = wrappedF;
+        if (isNeedWrap) {
+            result = wrappingFunction(wrappedF);
+            Object.keys(wrappedF).forEach(key => result[key] = wrappedF[key]);
+        }
+        return result;
+    };
 
-    // если была задана отладка
-    if (isDebugging)
-        f = makeDebugging(f);
+    f = getWrapFunction(f, makeMemoized, isMemoized);
+    f = getWrapFunction(f, makeDebugging, isDebugging);
+    f = getWrapFunction(f, makeCallSaved, isCallSaved);
 
-    // если было задано сохранение числа вызовов
-    if (isCallSaved)
-        f = makeCallSaved(f);
     return f;
 }
 
