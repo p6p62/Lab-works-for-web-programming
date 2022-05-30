@@ -94,6 +94,13 @@ function calculateFunctionInPoints(f, a, b, h) {
     return result;
 }
 
+function makeSingleCalculate() {
+    const accuracy = 3;
+    let xFromSite = parseFloat(document.getElementById("lab7_one_call_arg").value);
+    let result = (functionOnPage != null) ? functionOnPage(xFromSite) : NaN;
+    document.getElementById("lab7_one_call_result").value = numberToStringByAccuracy(result, accuracy);
+}
+
 function printTabulatingResult(divForResult, calculatingFunctionResult) {
     const accuracy = 3; // точность (число знаков после запятой в числах)
 
