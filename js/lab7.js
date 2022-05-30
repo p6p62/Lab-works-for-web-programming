@@ -1,9 +1,14 @@
+var functionOnPage = null;
+
 function calculateButtonClick() {
     // получение параметров для расчёта
     let parameters = getCalculationParameters();
 
     // получение функции для расчёта
     let configuredFunction = getSpecifiedFunction();
+
+    // сохранение настроенной функции
+    functionOnPage = configuredFunction;
 
     // расчёт значений функции по равноотстоящим точкам
     let functionCalculatingResult = calculateFunctionInPoints(configuredFunction, parameters.a, parameters.b, parameters.h);
@@ -23,6 +28,10 @@ function getSpecifiedFunction() {
     // если была задана отладка
     if (isDebugging)
         f = makeDebugging(f);
+
+    // если было задано сохранение числа вызовов
+    if (isCallSaved)
+        f = makeCallSaved(f);
     return f;
 }
 
@@ -37,10 +46,21 @@ function makeDebugging(f) {
         console.log("Аргумент(ы): " + argsStr);
 
         let result = f.apply(null, arguments);
-        console.log("Значение: " + result);0
+        console.log("Значение: " + result);
         console.log("");
         return result;
     }
+}
+
+function makeCallSaved(f) {
+    var callCount = 0;
+    let callSavedF = function () {
+        callCount++;
+        return f.apply(null, arguments);
+    };
+    callSavedF.resetCallCount = () => callCount = 0;
+    callSavedF.getCallCount = () => callCount;
+    return callSavedF;
 }
 
 function getSelectedFunction(functionNumberStr) {

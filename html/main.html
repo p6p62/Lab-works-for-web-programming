@@ -546,6 +546,25 @@
                     </button>
                 </fieldset>
             </div>
+            <div id="lab7_actions_block" class="actions-block configure-block">
+                <fieldset>
+                    <legend>Действия</legend>
+
+                    <div>
+                        <h4>Для мемоизированной</h4>
+                    </div>
+
+                    <div class="lab7_actions_call_saved">
+                        <h4>Для функции с сохранением количества вызовов</h4>
+                        <button onclick="alert('Количество вызовов: ' + functionOnPage.getCallCount());">
+                            Узнать количество вызовов
+                        </button>
+                        <button onclick="functionOnPage.resetCallCount(); alert('Сброшено!');">
+                            Сбросить счётчик
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
             <div id="lab7_function_calculate_result">
 
             </div>
