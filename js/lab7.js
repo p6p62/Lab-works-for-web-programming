@@ -15,6 +15,9 @@ function calculateButtonClick() {
 
     // вывод на сайт
     printTabulatingResult(document.getElementById("lab7_function_calculate_result"), functionCalculatingResult);
+
+    // расчёт характеристик по полученным значениям функции с выводом на сайт
+    makeCharacteristicsCalculation(functionCalculatingResult.results);
 }
 
 function getSpecifiedFunction() {
@@ -125,6 +128,64 @@ function calculateFunctionInPoints(f, a, b, h) {
     return result;
 }
 
+function makeCharacteristicsCalculation(functionValuesArray) {
+    // определение характеристик, которые надо считать
+    let isNeedAverage = document.getElementById("lab7_checkbox_average").checked;
+    let isNeedZeroCount = document.getElementById("lab7_checkbox_zero_count").checked;
+    let isNeedNegativeCount = document.getElementById("lab7_checkbox_negative_count").checked;
+
+    // получение массива с функциями расчёта
+    let characteristicsFunctions = [];
+    let pushFunction = (condition, f) => {
+        if (condition) characteristicsFunctions.push(f);
+    };
+
+    pushFunction(isNeedAverage, getAverageValue);
+    pushFunction(isNeedZeroCount, getZeroValuesCount);
+    pushFunction(isNeedNegativeCount, getNegativeValuesCount);
+
+    // получение расчитанных характеристик
+    let characteristics = calculateCharacteristics(functionValuesArray, characteristicsFunctions);
+
+    // вывод на сайт
+    let divForResult = document.getElementById("lab7_function_characteristics");
+    divForResult.innerHTML = '';
+
+    let counter = 0;
+    let addCharacteristic = (condition, prefix) => {
+        if (condition) {
+            divForResult.appendChild(document.createElement('p')).innerText = `${prefix}: ${characteristics[counter++]}`;
+        }
+    };
+    addCharacteristic(isNeedAverage, "Среднее значение"); // порядок следования логических переменных здесь и ниже должен
+    addCharacteristic(isNeedZeroCount, "Количество нулевых значений"); // совпадать с порядком в вызовах pushFunction
+    addCharacteristic(isNeedNegativeCount, "Количество отрицательных значений");
+}
+
+/**
+ * Выполняет каждую функцию из calculatingFunctionsArray, передавая functionValuesArray в качестве параметра
+ * Возвращает массив чисел, возвращённых функциями из calculatingFunctionsArray, располагая эти результаты в 
+ * том же порядке, в котором функции следовали в массиве calculatingFunctionsArray
+ * @param {*} functionValuesArray Массив со числовыми значениями
+ * @param {*} calculatingFunctionsArray Массив функций, расчитывающих конкретные характеристики. Каждая должна возвращать число
+ */
+function calculateCharacteristics(functionValuesArray, calculatingFunctionsArray) {
+    return calculatingFunctionsArray.map(f => f(functionValuesArray));
+}
+
+function getAverageValue(functionValuesArray) {
+    if (functionValuesArray.length === 0) return 0;
+    return functionValuesArray.reduce((sum, value) => sum + ((isFinite(value)) ? value : 0), 0) / functionValuesArray.filter(v => isFinite(v)).length;
+}
+
+function getZeroValuesCount(functionValuesArray) {
+    return functionValuesArray.filter(v => v === 0).length;
+}
+
+function getNegativeValuesCount(functionValuesArray) {
+    return functionValuesArray.filter(v => v < 0).length;
+}
+
 function makeSingleCalculate() {
     const accuracy = 3;
     let xFromSite = parseFloat(document.getElementById("lab7_one_call_arg").value);
@@ -225,11 +286,13 @@ function printTabulatingResult(divForResult, calculatingFunctionResult) {
 }
 
 function numberToStringByAccuracy(numberValue, accuracy) {
+    if (isNaN(numberValue))
+        return 'Расчёт невозможен';
     if (!isFinite(numberValue))
-        return 'Расчет невозможен';
+        return ((Math.sign(numberValue) < 0) ? '-' : '') + '∞';
     let numStrArr = numberValue.toString().split('.');
     if (numStrArr.length > 1 && accuracy > 0)
-        return parseInt(numberValue).toString().concat('.').concat(numStrArr[1].substr(0, accuracy))
+        return numberValue.toString().split('.')[0].concat('.').concat(numStrArr[1].substr(0, accuracy))
     else
         return numStrArr[0];
 }
