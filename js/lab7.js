@@ -10,6 +10,9 @@ function calculateButtonClick() {
     // сохранение настроенной функции
     functionOnPage = configuredFunction;
 
+    // настройка внешнего вида элементов на сайте
+    setOpacity();
+
     // расчёт значений функции по равноотстоящим точкам
     let functionCalculatingResult = calculateFunctionInPoints(configuredFunction, parameters.a, parameters.b, parameters.h);
 
@@ -326,4 +329,10 @@ function rewriteParametersOnSite(parameters) {
     document.getElementById('lab7_calc_a').value = parameters.a;
     document.getElementById('lab7_calc_b').value = parameters.b;
     document.getElementById('lab7_calc_step').value = parameters.h;
+}
+
+function setOpacity() {
+    document.getElementById("lab7_for_single_calculate").style.opacity = (functionOnPage != null) ? 1 : 0.3;
+    document.getElementById("lab7_for_memoized").style.opacity = (functionOnPage != null && "getCacheSize" in functionOnPage) ? 1 : 0.3;
+    document.getElementById("lab7_for_savecallcount").style.opacity = (functionOnPage != null && "getCallCount" in functionOnPage) ? 1 : 0.3;
 }

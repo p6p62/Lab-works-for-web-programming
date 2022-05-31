@@ -550,7 +550,7 @@
                 <fieldset>
                     <legend>Действия</legend>
 
-                    <div>
+                    <div id="lab7_for_single_calculate">
                         <h4>Однократный расчёт</h4>
                         <label for="lab7_one_call_arg">x = </label>
                         <input type="number" id="lab7_one_call_arg" onchange="lab7_one_call_result.value = '';"
@@ -561,7 +561,7 @@
                         <input type="text" readonly id="lab7_one_call_result">
                     </div>
 
-                    <div>
+                    <div id="lab7_for_memoized">
                         <h4>Для мемоизированной</h4>
                         <label for="lab7_cache_index">Индекс значения:</label>
                         <input type="number" min="0" id="lab7_cache_index"><br>
@@ -572,7 +572,7 @@
                         </button>
                     </div>
 
-                    <div class="lab7_actions_call_saved">
+                    <div id="lab7_for_savecallcount">
                         <h4>Для функции с сохранением количества вызовов</h4>
                         <button onclick="getCallCount();">
                             Узнать количество вызовов
@@ -595,6 +595,7 @@
             <div id="lab7_function_calculate_result">
 
             </div>
+            <script>setOpacity();</script>
         </div>
     </main>
     <script src="../js/on_page_loaded.js"></script>
