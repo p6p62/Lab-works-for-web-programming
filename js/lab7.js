@@ -132,6 +132,14 @@ function makeSingleCalculate() {
     document.getElementById("lab7_one_call_result").value = numberToStringByAccuracy(result, accuracy);
 }
 
+function getMemoizedValuesCount() {
+    if (!("getCachedValue" in functionOnPage)) {
+        alert("Мемоизация не включена");
+        return;
+    }
+    alert('Число предрасчитанных значений: ' + functionOnPage.getCacheSize());
+}
+
 function getCachedValueByIndex() {
     let index = parseInt(document.getElementById("lab7_cache_index").value);
     if (isNaN(index))
@@ -159,6 +167,21 @@ function getCachedValueByIndex() {
     let arg = cacheRecord[0].toString();
     let value = (!isNaN(cacheRecord[1])) ? cacheRecord[1].toString() : "Расчёт невозможен";
     alert(`Сохранённое значение с индексом ${index}:\nx = ${arg}\nf(x) = ${value}`);
+}
+
+function getCallCount() {
+    if (!("getCallCount" in functionOnPage)) {
+        alert("Сохранение числа вызовов не включено");
+    }
+    alert('Количество вызовов: ' + functionOnPage.getCallCount());
+}
+
+function resetCallCount() {
+    if (!("resetCallCount" in functionOnPage)) {
+        alert("Сохранение числа вызовов не включено");
+    }
+    functionOnPage.resetCallCount();
+    alert("Сброшено!");
 }
 
 function printTabulatingResult(divForResult, calculatingFunctionResult) {
