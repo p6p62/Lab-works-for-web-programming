@@ -172,6 +172,7 @@ function getCachedValueByIndex() {
 function getCallCount() {
     if (!("getCallCount" in functionOnPage)) {
         alert("Сохранение числа вызовов не включено");
+        return;
     }
     alert('Количество вызовов: ' + functionOnPage.getCallCount());
 }
@@ -179,6 +180,7 @@ function getCallCount() {
 function resetCallCount() {
     if (!("resetCallCount" in functionOnPage)) {
         alert("Сохранение числа вызовов не включено");
+        return;
     }
     functionOnPage.resetCallCount();
     alert("Сброшено!");
