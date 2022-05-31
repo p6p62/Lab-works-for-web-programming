@@ -53,6 +53,16 @@ function makeMemoized(f) {
         return cache[key];
     };
     memoizedF.getCacheSize = () => Object.keys(cache).length;
+    memoizedF.getCachedValue = (index) => {
+        let firstArgNum = (argsStr) => parseFloat(argsStr.slice(argsStr.indexOf(':') + 1).split(' ')[0]);
+        let sortedCachedArgs = Object.keys(cache).sort((a, b) => {
+            return firstArgNum(a) - firstArgNum(b);
+        });
+
+        let resultCachedArg = sortedCachedArgs[index];
+        let cachedArgValue = firstArgNum(resultCachedArg);
+        return [cachedArgValue, cache[resultCachedArg]]; // массив из 2 чисел "[аргумент, значение]"
+    }
     return memoizedF;
 }
 
@@ -120,6 +130,35 @@ function makeSingleCalculate() {
     let xFromSite = parseFloat(document.getElementById("lab7_one_call_arg").value);
     let result = (functionOnPage != null) ? functionOnPage(xFromSite) : NaN;
     document.getElementById("lab7_one_call_result").value = numberToStringByAccuracy(result, accuracy);
+}
+
+function getCachedValueByIndex() {
+    let index = parseInt(document.getElementById("lab7_cache_index").value);
+    if (isNaN(index))
+        index = 0;
+
+    if (!("getCachedValue" in functionOnPage)) {
+        alert("Мемоизация не включена");
+        return;
+    }
+
+    if (functionOnPage.getCacheSize() === 0) {
+        alert("Предрасчитанных значений нет");
+        return;
+    }
+
+    if (index >= functionOnPage.getCacheSize())
+        index = functionOnPage.getCacheSize() - 1;
+    else
+        if (index < 0)
+            index = 0;
+    document.getElementById("lab7_cache_index").value = index;
+
+    let cacheRecord = functionOnPage.getCachedValue(index);
+
+    let arg = cacheRecord[0].toString();
+    let value = (!isNaN(cacheRecord[1])) ? cacheRecord[1].toString() : "Расчёт невозможен";
+    alert(`Сохранённое значение с индексом ${index}:\nx = ${arg}\nf(x) = ${value}`);
 }
 
 function printTabulatingResult(divForResult, calculatingFunctionResult) {

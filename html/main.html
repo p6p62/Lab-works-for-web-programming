@@ -563,6 +563,10 @@
 
                     <div>
                         <h4>Для мемоизированной</h4>
+                        <label for="lab7_cache_index">Индекс значения:</label>
+                        <input type="number" min="0" id="lab7_cache_index"><br>
+                        <button onclick="getCachedValueByIndex();">Получить предрасчитанное значение</button><br>
+
                         <button onclick="alert('Число предрасчитанных значений: ' + functionOnPage.getCacheSize());">
                             Узнать число предрасчитанных значений
                         </button>
