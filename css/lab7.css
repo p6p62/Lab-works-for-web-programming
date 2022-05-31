@@ -14,3 +14,9 @@
 #lab7_function_calculate_result table td:last-child {
     padding-right: 0;
 }
+
+#lab7_actions_block div {
+    display: table-cell;
+    vertical-align: top;
+    padding-right: 20px;
+}
