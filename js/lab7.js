@@ -55,7 +55,8 @@ function makeMemoized(f) {
     var cache = {};
     var memoizedF = function () {
         let key = arguments.length + ':' + [].join.call(arguments, ' ');
-        cache[key] = f.apply(null, arguments);
+        if (cache[key] === undefined)
+            cache[key] = f.apply(null, arguments);
         return cache[key];
     };
     memoizedF.getCacheSize = () => Object.keys(cache).length;
