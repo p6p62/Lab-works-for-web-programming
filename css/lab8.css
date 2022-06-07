@@ -1,0 +1,18 @@
+#lab8_circle, #lab8_rectangle, #lab8_triangle {
+    display: none;
+}
+
+#lab8_type_cicrle:checked ~ #lab8_circle,
+#lab8_type_rectangle:checked ~ #lab8_rectangle,
+#lab8_type_triangle:checked ~ #lab8_triangle {
+    display: block;
+}
+
+#content_lab_8 h4 {
+    margin-bottom: 7px;
+    margin-top: 15px;
+}
+
+#content_lab_8 h4:first-child {
+    margin-top: 0;
+}
