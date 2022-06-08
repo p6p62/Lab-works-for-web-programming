@@ -16,3 +16,8 @@
 #content_lab_8 h4:first-child {
     margin-top: 0;
 }
+
+#lab8_objects_div {
+    display: inline-flex;
+    flex-wrap: wrap;
+}

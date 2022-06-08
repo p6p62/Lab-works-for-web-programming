@@ -123,17 +123,25 @@ function setRightPrototypeAndConstructor(classConstructor) {
 }
 
 function addObjectToSite(obj) {
+    let getId = (value) => `lab8_figure_${value}`;
+
     objectsOnSite.push(obj); // добавление на сайт
 
     // для выделения объекта вместе с другими
     let checkBox = document.createElement("input");
     checkBox.setAttribute("type", "checkbox");
-    checkBox.setAttribute("id", objectsOnSite.length);
+    checkBox.setAttribute("id", getId(objectsOnSite.length));
 
-    let tr = document.createElement("tr");
-    tr.appendChild(document.createElement("td")).appendChild(checkBox);
-    // TODO вывод типа
-    // TODO вывод координат и свойств
+    let divWithFigure = document.createElement("div");
+    divWithFigure.style.display = "table-cell";
+    divWithFigure.style.border = "solid";
+    divWithFigure.style.margin = "5px";
+    divWithFigure.style.padding = "3px";
+    divWithFigure.appendChild(document.createElement("td")).appendChild(checkBox);
 
-    document.getElementById("lab8_objects_table_body").appendChild(tr);
+    let objLabel = divWithFigure.appendChild(document.createElement("td")).appendChild(document.createElement("label"))
+    objLabel.setAttribute("for", getId(objectsOnSite.length));
+    objLabel.innerText = obj.toString();
+
+    document.getElementById("lab8_objects_div").appendChild(divWithFigure);
 }
