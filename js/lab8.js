@@ -11,15 +11,18 @@ function buttonAddObjectClick() {
 }
 
 function getCircle() {
-    return new Circle(1, 2, 5)
+    [xCenter, yCenter, radius] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_circle_'"), i => parseFloat(i.value));
+    return new Circle(xCenter, yCenter, radius);
 }
 
 function getRectangle() {
-    return new Rectangle(2, 5, 3, 5);
+    [xLeftUp, yLeftUp, width, height] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_rectangle_'"), i => parseFloat(i.value));
+    return new Rectangle(xLeftUp, yLeftUp, width, height);
 }
 
 function getTriangle() {
-    return new Triangle();
+    [x1, y1, x2, y2, x3, y3] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_triangle_'"), i => parseFloat(i.value));
+    return new Triangle(x1, y1, x2, y2, x3, y3);
 }
 
 function Shape() {
