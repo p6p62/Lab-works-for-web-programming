@@ -15,7 +15,7 @@ function getCircle() {
 }
 
 function getRectangle() {
-    return new Rectangle();
+    return new Rectangle(2, 5, 3, 5);
 }
 
 function getTriangle() {
@@ -23,44 +23,87 @@ function getTriangle() {
 }
 
 function Shape() {
-    this.registeredActions = [];
-    this.clearRegisteredActions = () => this.registeredActions = [];
-    this.printActionsToConsole = () => this.registeredActions.forEach(a => console.log(a));
-
     this._points = [];
-    this.moveOnVector = (x, y) => this._points.forEach((p, i, arr) => {
-        arr[i][0] += x;
-        arr[i][1] += y;
-    });
-    this.rotateOnAngleAroundPoint = (xRot, yRot, angleDegree) => {
-        angleInRadian = angleDegree * Math.PI / 180.0;
-        this._points.forEach((p, i, arr) => {
-            arr[i][0] = (p[0] - xRor) * Math.cos(angleInRadian) - (p[1] - yRot) * Math.sin(angleInRadian);
-            arr[i][1] = (p[0] - xRot) * Math.sin(angleInRadian) + (p[1] - yRot) * Math.cos(angleInRadian);
-        });
-    }
-    this.getArea;
-    this.getPerimeter = () => this._points.reduce((perimeter, point, index, arr) => {
-        // для первой точки в соответствие берется последняя, а для любой другой - предыдущая
-        let secondPointIndex = (index != 0) ? index - 1 : arr.length - 1;
-        let currentSideLength = Math.sqrt(Math.pow(point[0] - arr[secondPointIndex][0], 2) + Math.pow(point[1] - arr[secondPointIndex][1], 2));
-        return perimeter + currentSideLength;
-    }, 0);
 }
+// для регистрации, очистки и вывода действий
+// (!) свойство специально сделал в прототипе, так как посчитал, что по заданию класс должен знать о всех действиях с производными объектами
+Shape.prototype.registeredActions = [];
+Shape.prototype.clearRegisteredActions = () => Shape.prototype.registeredActions = [];
+Shape.prototype.printActionsToConsole = () => Shape.prototype.registeredActions.forEach(a => console.log(a));
+
+// общие методы фигур
+Shape.prototype.moveOnVector = (x, y) => this._points.forEach((p, i, arr) => {
+    arr[i][0] += x;
+    arr[i][1] += y;
+});
+Shape.prototype.rotateOnAngleAroundPoint = (xRot, yRot, angleDegree) => {
+    angleInRadian = angleDegree * Math.PI / 180.0;
+    this._points.forEach((p, i, arr) => {
+        arr[i][0] = (p[0] - xRor) * Math.cos(angleInRadian) - (p[1] - yRot) * Math.sin(angleInRadian);
+        arr[i][1] = (p[0] - xRot) * Math.sin(angleInRadian) + (p[1] - yRot) * Math.cos(angleInRadian);
+    });
+}
+// площадь считаю по формуле Гаусса. Для точечно заданных на плоскости многоугольников, не пересекающих
+// себя, она будет универсальной. Для других видов фигур (здесь - круг) можно переопределить
+Shape.prototype.getArea = () => {
+    let n = this._points.length;
+    let sumAllWithoutLast = 0;
+    for (let i = 0; i < n - 1; i++) {
+        sumAllWithoutLast += (this._points[i][0] * this._points[i + 1][1] - this._points[i + 1][0] * this._points[i][1]);
+    }
+    sumAllWithoutLast += (this._points[n - 1][0] * this._points[0][1] - this._points[0][0] * this._points[n - 1][1]);
+    return Math.abs(sumAllWithoutLast) / 2;
+};
+Shape.prototype.getPerimeter = () => this._points.reduce((perimeter, point, index, arr) => {
+    // для первой точки в соответствие берется последняя, а для любой другой - предыдущая
+    let secondPointIndex = (index != 0) ? index - 1 : arr.length - 1;
+    let currentSideLength = Math.sqrt(Math.pow(point[0] - arr[secondPointIndex][0], 2) + Math.pow(point[1] - arr[secondPointIndex][1], 2));
+    return perimeter + currentSideLength;
+}, 0);
 
 function Circle(xCenter, yCenter, radius) {
-    Object.setPrototypeOf(this, new Shape());
+    Shape.call(this);
 
-    Object.getPrototypeOf(this)._points.push([xCenter, yCenter]);
+    this._points.push([xCenter, yCenter]);
     this.radius = radius;
 }
+setRightPrototypeAndConstructor(Circle);
+// в круге дополнительно переопределяю методы из Shape, которые для него неприменимы
+Circle.prototype.getArea = () => Math.PI * this.radius * this.radius;
+Circle.prototype.getPerimeter = () => 2 * Math.PI * this.radius;
 
-function Rectangle(xLeftUp, yLeftUp, length, width) {
-    Object.setPrototypeOf(this, new Shape());
+// направление осей координат декартово: положительное направление оси x - вправо, положительное направление оси y - вверх
+function Rectangle(xLeftUp, yLeftUp, width, height) {
+    Shape.call(this);
+
+    this._points.push(
+        [xLeftUp, yLeftUp],
+        [xLeftUp + width, yLeftUp],
+        [xLeftUp + width, yLeftUp - height],
+        [xLeftUp, yLeftUp - height]
+    );
 }
+setRightPrototypeAndConstructor(Rectangle);
 
 function Triangle(x1, y1, x2, y2, x3, y3) {
-    Object.setPrototypeOf(this, new Shape());
+    Shape.call(this);
+
+    this._points.push(
+        [x1, y1],
+        [x2, y2],
+        [x3, y3]
+    );
+}
+setRightPrototypeAndConstructor(Triangle);
+
+function setRightPrototypeAndConstructor(classConstructor) {
+    classConstructor.prototype = Object.create(Shape.prototype);
+    Object.defineProperty(classConstructor.prototype, "constructor", {
+        value: classConstructor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+    });
 }
 
 function addObjectToSite(obj) {
