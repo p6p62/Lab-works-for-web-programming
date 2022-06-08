@@ -34,6 +34,10 @@ Shape.prototype.registeredActions = [];
 Shape.prototype.clearRegisteredActions = () => Shape.prototype.registeredActions = [];
 Shape.prototype.printActionsToConsole = () => Shape.prototype.registeredActions.forEach(a => console.log(a));
 
+Shape.prototype.toString = function () {
+    return `Основные точки фигуры (x, y):\n${this._points.map((p, i) => `№${i + 1}: (${p[0]}, ${p[1]})\n`).join("")}`;
+};
+
 // общие методы фигур
 Shape.prototype.moveOnVector = (x, y) => this._points.forEach((p, i, arr) => {
     arr[i][0] += x;
@@ -74,6 +78,9 @@ setRightPrototypeAndConstructor(Circle);
 // в круге дополнительно переопределяю методы из Shape, которые для него неприменимы
 Circle.prototype.getArea = () => Math.PI * this.radius * this.radius;
 Circle.prototype.getPerimeter = () => 2 * Math.PI * this.radius;
+Circle.prototype.toString = function () {
+    return `КРУГ\nРадиус: ${this.radius}\nЦентр (x, y): (${this._points[0][0]}, ${this._points[0][1]})`;
+};
 
 // направление осей координат декартово: положительное направление оси x - вправо, положительное направление оси y - вверх
 function Rectangle(xLeftUp, yLeftUp, width, height) {
@@ -87,6 +94,9 @@ function Rectangle(xLeftUp, yLeftUp, width, height) {
     );
 }
 setRightPrototypeAndConstructor(Rectangle);
+Rectangle.prototype.toString = function () {
+    return "ПРЯМОУГОЛЬНИК\n" + Object.getPrototypeOf(Object.getPrototypeOf(this)).toString.call(this);
+};
 
 function Triangle(x1, y1, x2, y2, x3, y3) {
     Shape.call(this);
@@ -98,6 +108,9 @@ function Triangle(x1, y1, x2, y2, x3, y3) {
     );
 }
 setRightPrototypeAndConstructor(Triangle);
+Triangle.prototype.toString = function () {
+    return "ТРЕУГОЛЬНИК\n" + Object.getPrototypeOf(Object.getPrototypeOf(this)).toString.call(this);
+};
 
 function setRightPrototypeAndConstructor(classConstructor) {
     classConstructor.prototype = Object.create(Shape.prototype);
