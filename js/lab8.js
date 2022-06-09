@@ -10,6 +10,12 @@ function buttonAddObjectClick() {
     addObjectToSite(creationFunctions[type]());
 }
 
+function rotateFiguresAroundPoint() {
+    [xRotate, yRotate, angleDegree] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_rotate_'"), i => parseFloat(i.value));
+    getSelectedObjects().forEach(o => o.rotateOnAngleAroundPoint(xRotate, yRotate, angleDegree));
+    refreshSelectedObjectsOnSite();
+}
+
 function getFiguresArea() {
     let result = "Площади выбранных фигур (по порядку):\n";
     getSelectedObjects().forEach(o => result += `${o.getArea()}\n`);
@@ -55,11 +61,12 @@ Shape.prototype.moveOnVector = (x, y) => this._points.forEach((p, i, arr) => {
     arr[i][0] += x;
     arr[i][1] += y;
 });
-Shape.prototype.rotateOnAngleAroundPoint = (xRot, yRot, angleDegree) => {
+Shape.prototype.rotateOnAngleAroundPoint = function (xRot, yRot, angleDegree) {
     angleInRadian = angleDegree * Math.PI / 180.0;
     this._points.forEach((p, i, arr) => {
-        arr[i][0] = (p[0] - xRor) * Math.cos(angleInRadian) - (p[1] - yRot) * Math.sin(angleInRadian);
-        arr[i][1] = (p[0] - xRot) * Math.sin(angleInRadian) + (p[1] - yRot) * Math.cos(angleInRadian);
+        [x, y] = [p[0], p[1]];
+        arr[i][0] = xRot + (x - xRot) * Math.cos(angleInRadian) - (y - yRot) * Math.sin(angleInRadian);
+        arr[i][1] = yRot + (x - xRot) * Math.sin(angleInRadian) + (y - yRot) * Math.cos(angleInRadian);
     });
 }
 // площадь считаю по формуле Гаусса. Для точечно заданных на плоскости многоугольников, не пересекающих
@@ -163,4 +170,12 @@ function addObjectToSite(obj) {
 function getSelectedObjects() {
     let allSelectedObjectsIndexes = [].map.call(document.querySelectorAll("input[id ^= 'lab8_figure_']:checked"), e => parseInt(e.id.slice('lab8_figure_'.length)) - 1);
     return allSelectedObjectsIndexes.map(i => objectsOnSite[i]);
+}
+
+function refreshSelectedObjectsOnSite() {
+    let allSelectedObjectsId = [].map.call(document.querySelectorAll("input[id ^= 'lab8_figure_']:checked"), e => e.id);
+    let allSelectedObjectsIndexes = allSelectedObjectsId.map(e => parseInt(e.slice('lab8_figure_'.length)) - 1);
+
+    // получаю все id у нажатых checkbox для объектов, выделяю индексы, а потом обновляю напрямую по ним на сайте новыми данными
+    allSelectedObjectsId.forEach((id, index) => document.querySelector(`label[for = '${id}'`).innerText = objectsOnSite[allSelectedObjectsIndexes[index]]);
 }
