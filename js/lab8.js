@@ -10,6 +10,12 @@ function buttonAddObjectClick() {
     addObjectToSite(creationFunctions[type]());
 }
 
+function moveFiguresOnVector() {
+    [xMove, yMove] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_vector_'"), i => parseFloat(i.value));
+    getSelectedObjects().forEach(o => o.moveOnVector(xMove, yMove));
+    refreshSelectedObjectsOnSite();
+}
+
 function rotateFiguresAroundPoint() {
     [xRotate, yRotate, angleDegree] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_rotate_'"), i => parseFloat(i.value));
     getSelectedObjects().forEach(o => o.rotateOnAngleAroundPoint(xRotate, yRotate, angleDegree));
@@ -57,10 +63,12 @@ Shape.prototype.toString = function () {
 };
 
 // общие методы фигур
-Shape.prototype.moveOnVector = (x, y) => this._points.forEach((p, i, arr) => {
-    arr[i][0] += x;
-    arr[i][1] += y;
-});
+Shape.prototype.moveOnVector = function (x, y) {
+    this._points.forEach((p, i, arr) => {
+        arr[i][0] += x;
+        arr[i][1] += y;
+    });
+};
 Shape.prototype.rotateOnAngleAroundPoint = function (xRot, yRot, angleDegree) {
     angleInRadian = angleDegree * Math.PI / 180.0;
     this._points.forEach((p, i, arr) => {
