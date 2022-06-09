@@ -16,6 +16,12 @@ function getFiguresArea() {
     alert(result);
 }
 
+function getFiguresPerimeter() {
+    let result = "Периметры выбранных фигур (по порядку):\n";
+    getSelectedObjects().forEach(o => result += `${o.getPerimeter()}\n`);
+    alert(result);
+}
+
 function getCircle() {
     [xCenter, yCenter, radius] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_circle_'"), i => parseFloat(i.value));
     return new Circle(xCenter, yCenter, radius);
@@ -58,7 +64,7 @@ Shape.prototype.rotateOnAngleAroundPoint = (xRot, yRot, angleDegree) => {
 }
 // площадь считаю по формуле Гаусса. Для точечно заданных на плоскости многоугольников, не пересекающих
 // себя, она будет универсальной. Для других видов фигур (здесь - круг) можно переопределить
-Shape.prototype.getArea = () => {
+Shape.prototype.getArea = function () {
     let n = this._points.length;
     let sumAllWithoutLast = 0;
     for (let i = 0; i < n - 1; i++) {
@@ -67,12 +73,14 @@ Shape.prototype.getArea = () => {
     sumAllWithoutLast += (this._points[n - 1][0] * this._points[0][1] - this._points[0][0] * this._points[n - 1][1]);
     return Math.abs(sumAllWithoutLast) / 2;
 };
-Shape.prototype.getPerimeter = () => this._points.reduce((perimeter, point, index, arr) => {
-    // для первой точки в соответствие берется последняя, а для любой другой - предыдущая
-    let secondPointIndex = (index != 0) ? index - 1 : arr.length - 1;
-    let currentSideLength = Math.sqrt(Math.pow(point[0] - arr[secondPointIndex][0], 2) + Math.pow(point[1] - arr[secondPointIndex][1], 2));
-    return perimeter + currentSideLength;
-}, 0);
+Shape.prototype.getPerimeter = function () {
+    return this._points.reduce((perimeter, point, index, arr) => {
+        // для первой точки в соответствие берется последняя, а для любой другой - предыдущая
+        let secondPointIndex = (index != 0) ? index - 1 : arr.length - 1;
+        let currentSideLength = Math.sqrt(Math.pow(point[0] - arr[secondPointIndex][0], 2) + Math.pow(point[1] - arr[secondPointIndex][1], 2));
+        return perimeter + currentSideLength;
+    }, 0);
+};
 
 function Circle(xCenter, yCenter, radius) {
     Shape.call(this);
@@ -82,8 +90,8 @@ function Circle(xCenter, yCenter, radius) {
 }
 setRightPrototypeAndConstructor(Circle);
 // в круге дополнительно переопределяю методы из Shape, которые для него неприменимы
-Circle.prototype.getArea = () => Math.PI * this.radius * this.radius;
-Circle.prototype.getPerimeter = () => 2 * Math.PI * this.radius;
+Circle.prototype.getArea = function () { return Math.PI * this.radius * this.radius };
+Circle.prototype.getPerimeter = function () { return 2 * Math.PI * this.radius; };
 Circle.prototype.toString = function () {
     return `КРУГ\nРадиус: ${this.radius}\nЦентр (x, y): (${this._points[0][0]}, ${this._points[0][1]})`;
 };
