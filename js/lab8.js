@@ -11,7 +11,10 @@ function buttonAddObjectClick() {
 }
 
 function printFiguresActions() {
-    getSelectedObjects().forEach(o => o.printActionsToConsole());
+    getSelectedObjects().forEach(o => {
+        console.log(`\tФигура: ${o.toString()}`);
+        o.printActionsToConsole();
+    });
 }
 
 function clearFiguresActions() {
@@ -68,15 +71,13 @@ Shape.prototype.registerAnAction = function (action, args) {
     let currentDate = new Date();
     let callTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}.${currentDate.getMilliseconds()}`;
     let argsStr = (args.length > 0) ? [].join.call(args, " ") : "не переданы";
-    let figureStr = this.toString();
-    let figureName = figureStr.slice(0, figureStr.indexOf('\n'));
 
     this.registeredActions.push({
         action: action,
         callTime: callTime,
         args: argsStr,
 
-        toString: function () { return `Фигура:${figureName}\nДействие: ${this.action}\nВремя вызова: ${this.callTime}\nАргументы: ${this.args}`; }
+        toString: function () { return `[Действие: ${this.action}\nВремя вызова: ${this.callTime}\nАргументы: ${this.args}]`; }
     });
 }
 
