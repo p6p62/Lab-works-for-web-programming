@@ -63,6 +63,19 @@ function getTriangle() {
 function Shape() {
     this._points = [];
     this.registeredActions = [];
+
+    Object.defineProperty(this, "points", {
+        get() {
+            return this._points;
+        },
+
+        set(value) {
+            // проверка типов: вершины фигуры могут представляться только набором точек двумерного пространства с числовыми координатами
+            // (массив массивов чисел длины 2)
+            if (value instanceof Array && value.every(p => p instanceof Array && p.length === 2 && p.every(coord => isFinite(coord))))
+                this._points = value;
+        }
+    });
 }
 // для регистрации, очистки и вывода действий
 Shape.prototype.clearRegisteredActions = function () { this.registeredActions = []; };
@@ -127,7 +140,7 @@ Shape.prototype.getPerimeter = function () {
 function Circle(xCenter, yCenter, radius) {
     Shape.call(this);
 
-    this._points.push([xCenter, yCenter]);
+    this.points = [[xCenter, yCenter]];
     this.radius = radius;
 }
 setRightPrototypeAndConstructor(Circle);
@@ -141,19 +154,19 @@ Circle.prototype.getPerimeter = function () {
     return 2 * Math.PI * this.radius;
 };
 Circle.prototype.toString = function () {
-    return `КРУГ\nРадиус: ${this.radius}\nЦентр (x, y): (${this._points[0][0]}, ${this._points[0][1]})`;
+    return `КРУГ\nРадиус: ${this.radius}\nЦентр (x, y): (${this.points[0][0]}, ${this.points[0][1]})`;
 };
 
 // направление осей координат декартово: положительное направление оси x - вправо, положительное направление оси y - вверх
 function Rectangle(xLeftUp, yLeftUp, width, height) {
     Shape.call(this);
 
-    this._points.push(
+    this.points = [
         [xLeftUp, yLeftUp],
         [xLeftUp + width, yLeftUp],
         [xLeftUp + width, yLeftUp - height],
         [xLeftUp, yLeftUp - height]
-    );
+    ];
 }
 setRightPrototypeAndConstructor(Rectangle);
 Rectangle.prototype.toString = function () {
@@ -163,11 +176,11 @@ Rectangle.prototype.toString = function () {
 function Triangle(x1, y1, x2, y2, x3, y3) {
     Shape.call(this);
 
-    this._points.push(
+    this.points = [
         [x1, y1],
         [x2, y2],
         [x3, y3]
-    );
+    ];
 }
 setRightPrototypeAndConstructor(Triangle);
 Triangle.prototype.toString = function () {
