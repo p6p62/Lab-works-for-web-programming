@@ -10,6 +10,12 @@ function buttonAddObjectClick() {
     addObjectToSite(creationFunctions[type]());
 }
 
+function getFiguresArea() {
+    let result = "Площади выбранных фигур (по порядку):\n";
+    getSelectedObjects().forEach(o => result += `${o.getArea()}\n`);
+    alert(result);
+}
+
 function getCircle() {
     [xCenter, yCenter, radius] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_circle_'"), i => parseFloat(i.value));
     return new Circle(xCenter, yCenter, radius);
@@ -35,7 +41,7 @@ Shape.prototype.clearRegisteredActions = () => Shape.prototype.registeredActions
 Shape.prototype.printActionsToConsole = () => Shape.prototype.registeredActions.forEach(a => console.log(a));
 
 Shape.prototype.toString = function () {
-    return `Основные точки фигуры (x, y):\n${this._points.map((p, i) => `№${i + 1}: (${p[0]}, ${p[1]})\n`).join("")}`;
+    return `Вершины (x, y):\n${this._points.map((p, i) => `№${i + 1}: (${p[0]}, ${p[1]})\n`).join("")}`;
 };
 
 // общие методы фигур
@@ -144,4 +150,9 @@ function addObjectToSite(obj) {
     objLabel.innerText = obj.toString();
 
     document.getElementById("lab8_objects_div").appendChild(divWithFigure);
+}
+
+function getSelectedObjects() {
+    let allSelectedObjectsIndexes = [].map.call(document.querySelectorAll("input[id ^= 'lab8_figure_']:checked"), e => parseInt(e.id.slice('lab8_figure_'.length)) - 1);
+    return allSelectedObjectsIndexes.map(i => objectsOnSite[i]);
 }
