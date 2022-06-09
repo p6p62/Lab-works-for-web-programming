@@ -10,6 +10,14 @@ function buttonAddObjectClick() {
     addObjectToSite(creationFunctions[type]());
 }
 
+function printFiguresActions() {
+    getSelectedObjects().forEach(o => o.printActionsToConsole());
+}
+
+function clearFiguresActions() {
+    getSelectedObjects().forEach(o => o.clearRegisteredActions());
+}
+
 function moveFiguresOnVector() {
     [xMove, yMove] = [].map.call(document.querySelectorAll("input[id ^= 'lab8_vector_'"), i => parseFloat(i.value));
     getSelectedObjects().forEach(o => o.moveOnVector(xMove, yMove));
@@ -51,12 +59,26 @@ function getTriangle() {
 
 function Shape() {
     this._points = [];
+    this.registeredActions = [];
 }
 // для регистрации, очистки и вывода действий
-// (!) свойство специально сделал в прототипе, так как посчитал, что по заданию класс должен знать о всех действиях с производными объектами
-Shape.prototype.registeredActions = [];
-Shape.prototype.clearRegisteredActions = () => Shape.prototype.registeredActions = [];
-Shape.prototype.printActionsToConsole = () => Shape.prototype.registeredActions.forEach(a => console.log(a));
+Shape.prototype.clearRegisteredActions = function () { this.registeredActions = []; };
+Shape.prototype.printActionsToConsole = function () { this.registeredActions.forEach(a => console.log(a.toString())); };
+Shape.prototype.registerAnAction = function (action, args) {
+    let currentDate = new Date();
+    let callTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}.${currentDate.getMilliseconds()}`;
+    let argsStr = (args.length > 0) ? [].join.call(args, " ") : "не переданы";
+    let figureStr = this.toString();
+    let figureName = figureStr.slice(0, figureStr.indexOf('\n'));
+
+    this.registeredActions.push({
+        action: action,
+        callTime: callTime,
+        args: argsStr,
+
+        toString: function () { return `Фигура:${figureName}\nДействие: ${this.action}\nВремя вызова: ${this.callTime}\nАргументы: ${this.args}`; }
+    });
+}
 
 Shape.prototype.toString = function () {
     return `Вершины (x, y):\n${this._points.map((p, i) => `№${i + 1}: (${p[0]}, ${p[1]})\n`).join("")}`;
@@ -64,12 +86,14 @@ Shape.prototype.toString = function () {
 
 // общие методы фигур
 Shape.prototype.moveOnVector = function (x, y) {
+    this.registerAnAction("Перемещение", arguments);
     this._points.forEach((p, i, arr) => {
         arr[i][0] += x;
         arr[i][1] += y;
     });
 };
 Shape.prototype.rotateOnAngleAroundPoint = function (xRot, yRot, angleDegree) {
+    this.registerAnAction("Поворот", arguments);
     angleInRadian = angleDegree * Math.PI / 180.0;
     this._points.forEach((p, i, arr) => {
         [x, y] = [p[0], p[1]];
@@ -80,6 +104,7 @@ Shape.prototype.rotateOnAngleAroundPoint = function (xRot, yRot, angleDegree) {
 // площадь считаю по формуле Гаусса. Для точечно заданных на плоскости многоугольников, не пересекающих
 // себя, она будет универсальной. Для других видов фигур (здесь - круг) можно переопределить
 Shape.prototype.getArea = function () {
+    this.registerAnAction("Площадь", arguments);
     let n = this._points.length;
     let sumAllWithoutLast = 0;
     for (let i = 0; i < n - 1; i++) {
@@ -89,6 +114,7 @@ Shape.prototype.getArea = function () {
     return Math.abs(sumAllWithoutLast) / 2;
 };
 Shape.prototype.getPerimeter = function () {
+    this.registerAnAction("Периметр", arguments);
     return this._points.reduce((perimeter, point, index, arr) => {
         // для первой точки в соответствие берется последняя, а для любой другой - предыдущая
         let secondPointIndex = (index != 0) ? index - 1 : arr.length - 1;
@@ -105,8 +131,14 @@ function Circle(xCenter, yCenter, radius) {
 }
 setRightPrototypeAndConstructor(Circle);
 // в круге дополнительно переопределяю методы из Shape, которые для него неприменимы
-Circle.prototype.getArea = function () { return Math.PI * this.radius * this.radius };
-Circle.prototype.getPerimeter = function () { return 2 * Math.PI * this.radius; };
+Circle.prototype.getArea = function () {
+    this.registerAnAction("Площадь", arguments);
+    return Math.PI * this.radius * this.radius
+};
+Circle.prototype.getPerimeter = function () {
+    this.registerAnAction("Периметр", arguments);
+    return 2 * Math.PI * this.radius;
+};
 Circle.prototype.toString = function () {
     return `КРУГ\nРадиус: ${this.radius}\nЦентр (x, y): (${this._points[0][0]}, ${this._points[0][1]})`;
 };
