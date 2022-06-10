@@ -60,9 +60,30 @@ function getTriangle() {
     return new Triangle(x1, y1, x2, y2, x3, y3);
 }
 
-function Shape() {
-    this._points = [];
+function BaseObject() {
     this.registeredActions = [];
+}
+// для регистрации, очистки и вывода действий
+BaseObject.prototype.clearRegisteredActions = function () { this.registeredActions = []; };
+BaseObject.prototype.printActionsToConsole = function () { this.registeredActions.forEach(a => console.log(a.toString())); };
+BaseObject.prototype.registerAnAction = function (action, args) {
+    let currentDate = new Date();
+    let callTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}.${currentDate.getMilliseconds()}`;
+    let argsStr = (args.length > 0) ? [].join.call(args, " ") : "не переданы";
+
+    this.registeredActions.push({
+        action: action,
+        callTime: callTime,
+        args: argsStr,
+
+        toString: function () { return `[Действие: ${this.action}\nВремя вызова: ${this.callTime}\nАргументы: ${this.args}]`; }
+    });
+}
+
+function Shape() {
+    BaseObject.call(this);
+
+    this._points = [];
 
     Object.defineProperty(this, "points", {
         get() {
@@ -77,22 +98,13 @@ function Shape() {
         }
     });
 }
-// для регистрации, очистки и вывода действий
-Shape.prototype.clearRegisteredActions = function () { this.registeredActions = []; };
-Shape.prototype.printActionsToConsole = function () { this.registeredActions.forEach(a => console.log(a.toString())); };
-Shape.prototype.registerAnAction = function (action, args) {
-    let currentDate = new Date();
-    let callTime = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}.${currentDate.getMilliseconds()}`;
-    let argsStr = (args.length > 0) ? [].join.call(args, " ") : "не переданы";
-
-    this.registeredActions.push({
-        action: action,
-        callTime: callTime,
-        args: argsStr,
-
-        toString: function () { return `[Действие: ${this.action}\nВремя вызова: ${this.callTime}\nАргументы: ${this.args}]`; }
-    });
-}
+Shape.prototype = Object.create(BaseObject.prototype);
+Object.defineProperty(Shape.prototype, "constructor", {
+    value: Shape,
+    enumerable: false,
+    writable: true,
+    configurable: true
+});
 
 Shape.prototype.toString = function () {
     return `Вершины (x, y):\n${this._points.map((p, i) => `№${i + 1}: (${p[0]}, ${p[1]})\n`).join("")}`;
